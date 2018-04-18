@@ -1,0 +1,10 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Bitcoin Core
+Comment=Connect to the Btn P2P Network
+Exec=btn-qt %u
+Terminal=false
+Type=Application
+Icon=btn128
+MimeType=x-scheme-handler/btn;
+Categories=Office;Finance;

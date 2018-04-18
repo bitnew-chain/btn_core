@@ -1,0 +1,6 @@
+usr/local/bin/btn-qt usr/bin
+share/pixmaps/btn32.xpm usr/share/pixmaps
+share/pixmaps/btn16.xpm usr/share/pixmaps
+share/pixmaps/btn128.png usr/share/pixmaps
+debian/btn-qt.desktop usr/share/applications
+debian/btn-qt.protocol usr/share/kde4/services/
