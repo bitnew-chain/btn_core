@@ -12,6 +12,11 @@ RestoreDialog::RestoreDialog(QWidget *parent) :
     model(0)
 {
     ui->setupUi(this);
+
+    ui->btnReset->setText(tr("Reset"));
+    ui->btnBoxRestore->button(QDialogButtonBox::Ok)->setText(tr("Ok"));
+    ui->btnBoxRestore->button(QDialogButtonBox::Cancel)->setText(tr("Cancel"));
+
     SetObjectStyleSheet(ui->btnReset, StyleSheetNames::ButtonWhite);
 }
 

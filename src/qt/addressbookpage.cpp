@@ -30,7 +30,7 @@ AddressBookPage::AddressBookPage(const PlatformStyle *platformStyle, Mode _mode,
     tab(_tab)
 {
     ui->setupUi(this);
-
+    ui->closeButton->setText(tr("Close"));
     SetObjectStyleSheet(ui->tableView, StyleSheetNames::TableViewLight);
     setStyleSheet("");
 

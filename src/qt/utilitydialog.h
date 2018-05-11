@@ -31,6 +31,9 @@ private:
     Ui::HelpMessageDialog *ui;
     QString text;
 
+private:
+    QString LicenseInfo_CN();
+
 private Q_SLOTS:
     void on_okButton_accepted();
 };

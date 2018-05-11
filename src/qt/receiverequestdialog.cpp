@@ -106,6 +106,7 @@ ReceiveRequestDialog::ReceiveRequestDialog(QWidget *parent) :
     ui->lblQRCode->setVisible(false);
 #endif
 
+    ui->buttonBox->button(QDialogButtonBox::Close)->setText(tr("Close"));
     connect(ui->btnSaveAs, SIGNAL(clicked()), ui->lblQRCode, SLOT(saveImage()));
 }
 

@@ -381,7 +381,7 @@ void BitcoinGUI::createActions()
     tabGroup->addAction(historyAction);
 
     QRCTokenAction = new QAction(platformStyle->MultiStatesIcon(":/icons/qrctoken"), tr("&BRC Tokens"), this);
-    QRCTokenAction->setStatusTip(tr("QRC Tokens (send, receive or add Tokens in list)"));
+    QRCTokenAction->setStatusTip(tr("BRC Tokens (send, receive or add Tokens in list)"));
     QRCTokenAction->setToolTip(QRCTokenAction->statusTip());
     QRCTokenAction->setCheckable(true);
     QRCTokenAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_6));
@@ -1161,13 +1161,13 @@ void BitcoinGUI::showEvent(QShowEvent *event)
 void BitcoinGUI::incomingTransaction(const QString& date, int unit, const CAmount& amount, const QString& type, const QString& address, const QString& label)
 {
     // On new transaction, make an info balloon
-    QString msg = tr("Date: %1\n").arg(date) +
-                  tr("Amount: %1\n").arg(BitcoinUnits::formatWithUnit(unit, amount, true)) +
-                  tr("Type: %1\n").arg(type);
+    QString msg = tr("Date: %1").arg(date) + "\n" +
+                  tr("Amount: %1").arg(BitcoinUnits::formatWithUnit(unit, amount, true)) + "\n" +
+                  tr("Type: %1").arg(type) + "\n";
     if (!label.isEmpty())
-        msg += tr("Label: %1\n").arg(label);
+        msg += tr("Label: %1").arg(label) + "\n";
     else if (!address.isEmpty())
-        msg += tr("Address: %1\n").arg(address);
+        msg += tr("Address: %1").arg(address) + "\n";
     message((amount)<0 ? tr("Sent transaction") : tr("Incoming transaction"),
              msg, CClientUIInterface::MSG_INFORMATION);
 }
@@ -1175,13 +1175,13 @@ void BitcoinGUI::incomingTransaction(const QString& date, int unit, const CAmoun
 void BitcoinGUI::incomingTokenTransaction(const QString& date, const QString& amount, const QString& type, const QString& address, const QString& label, const QString& title)
 {
     // On new transaction, make an info balloon
-    QString msg = tr("Date: %1\n").arg(date) +
-                  tr("Amount: %1\n").arg(amount) +
-                  tr("Type: %1\n").arg(type);
+    QString msg = tr("Date: %1").arg(date) + "\n" +
+                  tr("Amount: %1").arg(amount) + "\n" +
+                  tr("Type: %1").arg(type) + "\n";
     if (!label.isEmpty())
-        msg += tr("Label: %1\n").arg(label);
+        msg += tr("Label: %1").arg(label) + "\n";
     else if (!address.isEmpty())
-        msg += tr("Address: %1\n").arg(address);
+        msg += tr("Address: %1").arg(address) + "\n";
     message(title, msg, CClientUIInterface::MSG_INFORMATION);
 }
 #endif // ENABLE_WALLET

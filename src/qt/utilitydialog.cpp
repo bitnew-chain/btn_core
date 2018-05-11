@@ -37,6 +37,8 @@ HelpMessageDialog::HelpMessageDialog(QWidget *parent, bool about) :
 {
     ui->setupUi(this);
 
+    ui->okButton->button(QDialogButtonBox::Ok)->setText(tr("Ok"));
+
     QString version = tr(PACKAGE_NAME) + " " + tr("version") + " " + QString::fromStdString(FormatFullVersion());
     /* On x86 add a bit specifier to the version so that users can distinguish between
      * 32 and 64 bit builds. On other architectures, 32/64 bit may be more ambiguous.
@@ -52,7 +54,8 @@ HelpMessageDialog::HelpMessageDialog(QWidget *parent, bool about) :
         setWindowTitle(tr("About %1").arg(tr(PACKAGE_NAME)));
 
         /// HTML-format the license message from the core
-        QString licenseInfo = QString::fromStdString(LicenseInfo());
+        //QString licenseInfo = QString::fromStdString(LicenseInfo());
+	QString licenseInfo = LicenseInfo_CN();
         QString licenseInfoHTML = licenseInfo;
         // Make URLs clickable
         QRegExp uri("<(.*)>", Qt::CaseSensitive, QRegExp::RegExp2);
@@ -135,6 +138,25 @@ HelpMessageDialog::HelpMessageDialog(QWidget *parent, bool about) :
 HelpMessageDialog::~HelpMessageDialog()
 {
     delete ui;
+}
+
+QString HelpMessageDialog::LicenseInfo_CN()
+{
+    const QString URL_SOURCE_CODE = "<https://github.com/bitnew-chain>";
+    const QString URL_WEBSITE = "<https://btn.org>";
+
+    return QString::fromStdString(CopyrightHolders(strprintf(_("Copyright (C) %i"), COPYRIGHT_YEAR) + " ")) + "\n" +
+           "\n" +
+           tr("Please contribute if you find %1 useful. Visit %2 for further information about the software.").arg((QString)PACKAGE_NAME, URL_WEBSITE) +
+           "\n" +
+           tr("The source code is available from %1.").arg(URL_SOURCE_CODE)+
+           "\n" +
+           "\n" +
+           tr("This is experimental software.") + "\n" +
+           tr("Distributed under the MIT software license, see the accompanying file %1 or %2.").arg("<https://opensource.org/licenses/MIT>") + "\n" +
+           "\n" +
+           tr("This product includes software developed by the OpenSSL Project for use in the OpenSSL Toolkit %1 and cryptographic software written by Eric Young and UPnP software written by Thomas Bernard.").arg("<https://www.openssl.org>") +
+           "\n";
 }
 
 void HelpMessageDialog::printToConsole()

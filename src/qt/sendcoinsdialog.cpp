@@ -830,6 +830,8 @@ SendConfirmationDialog::SendConfirmationDialog(const QString &title, const QStri
     QMessageBox(QMessageBox::Question, title, text, QMessageBox::Yes | QMessageBox::Cancel, parent), secDelay(_secDelay)
 {
     setDefaultButton(QMessageBox::Cancel);
+    QAbstractButton *CancelButton = button(QMessageBox::Cancel);
+    CancelButton->setText(tr("CANCEL"));
     yesButton = button(QMessageBox::Yes);
     updateYesButton();
     connect(&countDownTimer, SIGNAL(timeout()), this, SLOT(countDown()));

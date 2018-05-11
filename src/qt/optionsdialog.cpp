@@ -238,11 +238,16 @@ void OptionsDialog::on_resetButton_clicked()
     if(model)
     {
         // confirmation dialog
-        QMessageBox::StandardButton btnRetVal = QMessageBox::question(this, tr("Confirm options reset"),
-            tr("Client restart required to activate changes.") + "<br><br>" + tr("Client will be shut down. Do you want to proceed?"),
-            QMessageBox::Yes | QMessageBox::Cancel, QMessageBox::Cancel);
-
-        if(btnRetVal == QMessageBox::Cancel)
+        //QMessageBox::StandardButton btnRetVal = QMessageBox::question(this, tr("Confirm options reset"),
+        //    tr("Client restart required to activate changes.") + "<br><br>" + tr("Client will be shut down. Do you want to proceed?"),
+        //    QMessageBox::Yes | QMessageBox::Cancel, QMessageBox::Cancel);
+	QMessageBox btnRetVal(QMessageBox::Question, tr("Confirm options reset"),
+			tr("Client restart required to activate changes.") + "<br><br>" + tr("Client will be shut down. Do you want to proceed?"));
+	QPushButton *YesButton = btnRetVal.addButton(tr("YES"), QMessageBox::AcceptRole);
+	QPushButton *CancelButton = btnRetVal.addButton(tr("CANCEL"), QMessageBox::RejectRole);
+	btnRetVal.exec();
+        //if(btnRetVal == QMessageBox::Cancel)
+	if((QPushButton*)btnRetVal.clickedButton() == CancelButton)
             return;
 
         /* reset all options and close GUI */

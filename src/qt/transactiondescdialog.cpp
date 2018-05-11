@@ -9,13 +9,13 @@
 #include "styleSheet.h"
 
 #include <QModelIndex>
-
+#include <QPushButton>
 TransactionDescDialog::TransactionDescDialog(const QModelIndex &idx, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::TransactionDescDialog)
 {
     ui->setupUi(this);
-
+    ui->buttonBox->button(QDialogButtonBox::Close)->setText(tr("Close"));
     // Set stylesheet
     SetObjectStyleSheet(this, StyleSheetNames::ScrollBarDark);
 

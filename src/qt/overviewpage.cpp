@@ -83,13 +83,14 @@ public:
 
         QRect dateRect(mainRect.left() + MARGIN, mainRect.top(), DATE_WIDTH, TX_SIZE);
         painter->drawText(dateRect, Qt::AlignLeft|Qt::AlignVCenter, GUIUtil::dateTimeStr(date));
-
+	
         int topMargin = (TX_SIZE - DECORATION_SIZE) / 2;
         QRect decorationRect(dateRect.topRight() + QPoint(MARGIN, topMargin), QSize(DECORATION_SIZE, DECORATION_SIZE));
         icon.paint(painter, decorationRect);
 
         QRect typeRect(decorationRect.right() + MARGIN, mainRect.top(), TYPE_WIDTH, TX_SIZE);
-        painter->drawText(typeRect, Qt::AlignLeft|Qt::AlignVCenter, typeString);
+        //painter->drawText(typeRect, Qt::AlignLeft|Qt::AlignVCenter, typeString);
+	painter->drawText(typeRect, Qt::AlignLeft|Qt::AlignVCenter, tr("%1").arg(typeString));
 
         bool watchOnly = index.data(TransactionTableModel::WatchonlyRole).toBool();
 

@@ -56,7 +56,7 @@ CreateContract::CreateContract(const PlatformStyle *platformStyle, QWidget *pare
     m_ABIFunctionField = new ABIFunctionField(platformStyle, ABIFunctionField::Create, ui->scrollAreaConstructor);
     ui->scrollAreaConstructor->setWidget(m_ABIFunctionField);
     ui->labelBytecode->setToolTip(tr("The bytecode of the contract"));
-    ui->labelSenderAddress->setToolTip(tr("The quantum address that will be used to create the contract."));
+    ui->labelSenderAddress->setToolTip(tr("The BTN address that will be used to create the contract."));
 
     m_tabInfo = new TabBarInfo(ui->stackedWidget);
     m_tabInfo->addTab(0, tr("Create Contract"));
@@ -108,10 +108,15 @@ CreateContract::~CreateContract()
 void CreateContract::setLinkLabels()
 {
     ui->labelSolidity->setOpenExternalLinks(true);
-    ui->labelSolidity->setText("<a href=\"https://ethereum.github.io/browser-solidity/\">Solidity compiler</a>");
+    //ui->labelSolidity->setText("<a href=\"https://ethereum.github.io/browser-solidity/\">Solidity compiler</a>");
+    QString tmpStr;
+    tmpStr = tr("<a href=\"https://ethereum.github.io/browser-solidity/\">%1</a>").arg(tr("Solidity compiler"));
+    ui->labelSolidity->setText(tmpStr);
 
     ui->labelToken->setOpenExternalLinks(true);
-    ui->labelToken->setText("<a href=\"https://ethereum.org/token#the-code\">Token template</a>");
+    //ui->labelToken->setText("<a href=\"https://ethereum.org/token#the-code\">Token template</a>");
+    tmpStr = tr("<a href=\"https://ethereum.org/token#the-code\">%1</a>").arg(tr("Token template"));
+    ui->labelToken->setText(tmpStr);
 }
 
 void CreateContract::setModel(WalletModel *_model)
