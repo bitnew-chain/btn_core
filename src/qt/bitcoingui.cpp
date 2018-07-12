@@ -551,7 +551,6 @@ void BitcoinGUI::createMenuBar()
     help->addSeparator();
     help->addAction(aboutAction);
     help->addAction(aboutQtAction);
-    appMenuBar->show();
 }
 
 void BitcoinGUI::createToolBars()
