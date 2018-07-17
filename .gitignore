@@ -123,9 +123,5 @@ contrib/devtools/split-debug.sh
 CMakeLists.txt
 cmake-build-debug/
 .vscode
-<<<<<<< HEAD
-dist/
-=======
 dist/*
 Btn-Qt.app/*
->>>>>>> color
