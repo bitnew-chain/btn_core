@@ -23,6 +23,11 @@ static const uint64_t DEFAULT_MIN_GAS_PRICE_DGP = 40;
 static const uint64_t MIN_BLOCK_GAS_LIMIT_DGP = 1000000;
 static const uint64_t MAX_BLOCK_GAS_LIMIT_DGP = 1000000000;
 static const uint64_t DEFAULT_BLOCK_GAS_LIMIT_DGP = 40000000;
+using u64 =  boost::multiprecision::number<boost::multiprecision::cpp_int_backend<64, 64, boost::multiprecision::unsigned_magnitude, boost::multiprecision::unchecked, void>>;
+template <typename T> uint64_t toUint64(T _u)
+{
+        return static_cast<uint64_t>(u64(_u));
+}
 
 class BtnDGP {
     

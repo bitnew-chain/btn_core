@@ -32,7 +32,7 @@
 #include "Common.h"
 #include "Exceptions.h"
 #include "FixedHash.h"
-
+using u8 =  boost::multiprecision::number<boost::multiprecision::cpp_int_backend<8, 8, boost::multiprecision::unsigned_magnitude, boost::multiprecision::unchecked, void>>;
 namespace dev
 {
 
@@ -376,7 +376,10 @@ template <class T> struct Converter<std::unordered_set<T>> { static std::unorder
 template <class T, size_t N> struct Converter<std::array<T, N>> { static std::array<T, N> convert(RLP const& _r, int _flags) { return _r.toArray<T, N>(_flags); } };
 
 template <class T> inline T RLP::convert(int _flags) const { return Converter<T>::convert(*this, _flags); }
-
+template <typename T> uint8_t toUint8(T _u)
+{
+        return static_cast<uint8_t>(u8(_u));
+}
 /**
  * @brief Class for writing to an RLP bytestream.
  */
@@ -451,7 +454,7 @@ private:
 		m_out.resize(m_out.size() + _br);
 		byte* b = &m_out.back();
 		for (; _i; _i >>= 8)
-			*(b--) = (byte)_i;
+			*(b--) = toUint8(_i);
 	}
 
 	/// Our output byte stream.
