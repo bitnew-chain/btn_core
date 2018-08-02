@@ -114,6 +114,7 @@
         <file alias="invalid">res/styles/invalid.css</file>
         <file alias="tableviewlight">res/styles/tableviewlight.css</file>
         <file alias="buttonblack">res/styles/buttonblack.css</file>
+        <file alias="buttonblue">res/styles/buttonblue.css</file>
         <file alias="buttonwhite">res/styles/buttonwhite.css</file>
         <file alias="buttontransparent">res/styles/buttontransparent.css</file>
         <file alias="buttontransparentbordered">res/styles/buttontransparentbordered.css</file>

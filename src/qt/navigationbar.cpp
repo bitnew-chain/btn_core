@@ -2,9 +2,12 @@
 #include <QActionGroup>
 #include <QToolButton>
 #include <QLayout>
+#include <QGradient>
 #include <QStylePainter>
 #include <QStyleOptionToolButton>
 #include <QStyle>
+#include <QTableView>
+#include <QLabel>
 #include "styleSheet.h"
 
 namespace NavigationBar_NS
@@ -16,7 +19,7 @@ static const int MarginLeft = 0;
 static const int MarginRight = 0;
 static const int MarginTop = 0;
 static const int MarginBottom = 8;
-static const int ButtonSpacing = 2;
+static const int ButtonSpacing = 0;
 static const int SubNavPaddingRight = 40;
 }
 using namespace NavigationBar_NS;
@@ -168,6 +171,7 @@ void NavigationBar::buildUi()
     {
         // Set it visible if main component
         setVisible(!m_subBar);
+		QLabel *new_label = NULL;
 
         // Create new layout for the bar
         QActionGroup* actionGroup = new QActionGroup(this);
@@ -194,6 +198,7 @@ void NavigationBar::buildUi()
             toolButton->setIconSize(QSize(ToolButtonIconSize, ToolButtonIconSize));
             if(m_subBar)
             {
+                toolButton->setStyleSheet("color: #BFB9F5;");
                 SetObjectStyleSheet(toolButton, StyleSheetNames::ToolSubBlack);
             }
             else
@@ -204,6 +209,7 @@ void NavigationBar::buildUi()
             if(m_groups.contains(action))
             {
                 // Add the tool button
+				action->setChecked(false);
                 QVBoxLayout* vboxLayout2 = new QVBoxLayout();
                 vboxLayout->addLayout(vboxLayout2);
                 vboxLayout2->addWidget(toolButton);

@@ -26,8 +26,10 @@ QHeaderView::up-arrow {
     margin-bottom: 1px;
 }
 QTableView{
-    background-color: #f3f3f3;
-    alternate-background-color: #ededed;
+    /*background-color: #f3f3f3;
+    alternate-background-color: #ededed;*/
+    background-color: #FFFFFF;
+    alternate-background-color: #f0f0f0;
     border: 1px solid #919192;
     font: normal;
     qproperty-showGrid: false;

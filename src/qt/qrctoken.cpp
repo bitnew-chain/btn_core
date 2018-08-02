@@ -38,15 +38,15 @@ public:
 
         QRect mainRect = option.rect;
 
+        QColor txColor = index.row() % 2 ? QColor("#f0f0f0") : QColor("#ffffff");
+        painter->fillRect(mainRect, txColor);
+        
         bool selected = option.state & QStyle::State_Selected;
         if(selected)
         {
-            painter->fillRect(mainRect,QColor("#009ee5"));
+            painter->fillRect(mainRect,QColor("#6D8AFF"));
         }
-        else
-        {
-            painter->fillRect(mainRect,QColor("#383938"));
-        }
+        
 
         QRect hLineRect(mainRect.left(), mainRect.bottom(), mainRect.width(), 1);
         painter->fillRect(hLineRect, QColor("#f4f4f4"));
@@ -111,9 +111,11 @@ QRCToken::QRCToken(const PlatformStyle *platformStyle, QWidget *parent) :
     m_sendTokenPage->setEnabled(false);
     m_receiveTokenPage->setEnabled(false);
 
+
     ui->stackedWidgetToken->addWidget(m_sendTokenPage);
     ui->stackedWidgetToken->addWidget(m_receiveTokenPage);
     ui->stackedWidgetToken->addWidget(m_addTokenPage);
+    ui->stackedWidgetToken->setStyleSheet("background-color: #FFFFFF;");
 
     m_tokenTransactionView = new TokenTransactionView(m_platformStyle, this);
     m_tokenTransactionView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);

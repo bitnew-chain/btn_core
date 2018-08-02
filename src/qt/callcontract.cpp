@@ -50,9 +50,12 @@ CallContract::CallContract(const PlatformStyle *platformStyle, QWidget *parent) 
 
     // Set stylesheet
     SetObjectStyleSheet(ui->pushButtonClearAll, StyleSheetNames::ButtonBlack);
+    ui->textEditInterface->setStyleSheet("background-color: #FFFFFF; border: 1px solid #D8D8D8;");
+    ui->lineEditSenderAddress->setStyleSheet("background-color: #FFFFFF; border: 1px solid #D8D8D8;");
 
     m_ABIFunctionField = new ABIFunctionField(platformStyle, ABIFunctionField::Call, ui->scrollAreaFunction);
     ui->scrollAreaFunction->setWidget(m_ABIFunctionField);
+    m_ABIFunctionField->setStyleSheet("background-color: #FFFFFF;");
 
     ui->labelContractAddress->setToolTip(tr("The account address."));
     ui->labelSenderAddress->setToolTip(tr("The sender address hex string."));

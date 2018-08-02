@@ -52,6 +52,7 @@ TokenTransactionView::TokenTransactionView(const PlatformStyle *platformStyle, Q
     dateWidget->addItem(tr("Last month"), LastMonth);
     dateWidget->addItem(tr("This year"), ThisYear);
     dateWidget->addItem(tr("Range..."), Range);
+    dateWidget->setStyleSheet("background-color: #FFFFFF; border: 1px solid #D8D8D8;");
     hlayout->addWidget(dateWidget);
 
     typeWidget = new QComboBox(this);
@@ -61,6 +62,7 @@ TokenTransactionView::TokenTransactionView(const PlatformStyle *platformStyle, Q
     typeWidget->addItem(tr("Received with"), TokenFilterProxy::TYPE(TokenTransactionRecord::RecvWithAddress));
     typeWidget->addItem(tr("Sent to"), TokenFilterProxy::TYPE(TokenTransactionRecord::SendToAddress));
     typeWidget->addItem(tr("To yourself"), TokenFilterProxy::TYPE(TokenTransactionRecord::SendToSelf));
+    typeWidget->setStyleSheet("background-color: #FFFFFF; border: 1px solid #D8D8D8;");
     hlayout->addWidget(typeWidget);
 
     addressWidget = new QLineEdit(this);
@@ -72,7 +74,7 @@ TokenTransactionView::TokenTransactionView(const PlatformStyle *platformStyle, Q
     nameWidget = new QComboBox(this);
     nameWidget->setFixedWidth(NAME_COLUMN_WIDTH -10);
     nameWidget->addItem(tr("All"), "");
-
+    nameWidget->setStyleSheet("background-color: #FFFFFF; border: 1px solid #D8D8D8;");
     hlayout->addWidget(nameWidget);
 
     amountWidget = new QLineEdit(this);
@@ -104,10 +106,12 @@ TokenTransactionView::TokenTransactionView(const PlatformStyle *platformStyle, Q
     } else {
         hlayout->addSpacing(width);
     }
+
     // Always show scroll bar
     view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     view->setTabKeyNavigation(false);
     view->setContextMenuPolicy(Qt::CustomContextMenu);
+    view->setStyleSheet("background-color: #FFFFFF;");
 
     view->installEventFilter(this);
     tokenView = view;

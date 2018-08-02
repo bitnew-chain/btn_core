@@ -32,6 +32,8 @@ AddressBookPage::AddressBookPage(const PlatformStyle *platformStyle, Mode _mode,
     ui->setupUi(this);
     ui->closeButton->setText(tr("Close"));
     SetObjectStyleSheet(ui->tableView, StyleSheetNames::TableViewLight);
+    ui->tableView->setStyleSheet("background-color: #FFFFFF;");
+    ui->buttonsContainerWhite->setStyleSheet("background-color: #F0F2F8;");
     setStyleSheet("");
 
     if (!platformStyle->getImagesOnButtons()) {
@@ -39,12 +41,7 @@ AddressBookPage::AddressBookPage(const PlatformStyle *platformStyle, Mode _mode,
         ui->copyAddress->setIcon(QIcon());
         ui->deleteAddress->setIcon(QIcon());
         ui->exportButton->setIcon(QIcon());
-    } else {
-        ui->newAddress->setIcon(platformStyle->MultiStatesIcon(":/icons/add", PlatformStyle::PushButton, 0x5a5a5d));
-        ui->copyAddress->setIcon(platformStyle->MultiStatesIcon(":/icons/editcopy", PlatformStyle::PushButton, 0x5a5a5d));
-        ui->deleteAddress->setIcon(platformStyle->MultiStatesIcon(":/icons/remove", PlatformStyle::PushButton, 0x5a5a5d));
-        ui->exportButton->setIcon(platformStyle->MultiStatesIcon(":/icons/export", PlatformStyle::PushButton));
-    }
+    } 
 
     SetObjectStyleSheet(ui->newAddress, StyleSheetNames::ButtonWhite);
     SetObjectStyleSheet(ui->copyAddress, StyleSheetNames::ButtonWhite);

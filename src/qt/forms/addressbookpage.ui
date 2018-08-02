@@ -42,7 +42,7 @@
      </property>
      <property name="bottomMargin">
       <number>20</number>
-     </property>
+     QSpinBox</property>
      <item>
       <widget class="QLabel" name="labelExplanation">
        <property name="textFormat">
@@ -106,10 +106,6 @@
         <property name="text">
          <string>&amp;New</string>
         </property>
-        <property name="icon">
-         <iconset resource="../bitcoin.qrc">
-          <normaloff>:/icons/add</normaloff>:/icons/add</iconset>
-        </property>
         <property name="autoDefault">
          <bool>false</bool>
         </property>
@@ -123,10 +119,6 @@
         <property name="text">
          <string>&amp;Copy</string>
         </property>
-        <property name="icon">
-         <iconset resource="../bitcoin.qrc">
-          <normaloff>:/icons/editcopy</normaloff>:/icons/editcopy</iconset>
-        </property>
         <property name="autoDefault">
          <bool>false</bool>
         </property>
@@ -139,10 +131,6 @@
         </property>
         <property name="text">
          <string>&amp;Delete</string>
-        </property>
-        <property name="icon">
-         <iconset resource="../bitcoin.qrc">
-          <normaloff>:/icons/remove</normaloff>:/icons/remove</iconset>
         </property>
         <property name="autoDefault">
          <bool>false</bool>
@@ -169,10 +157,6 @@
         </property>
         <property name="text">
          <string>&amp;Export</string>
-        </property>
-        <property name="icon">
-         <iconset resource="../bitcoin.qrc">
-          <normaloff>:/icons/export</normaloff>:/icons/export</iconset>
         </property>
         <property name="autoDefault">
          <bool>false</bool>

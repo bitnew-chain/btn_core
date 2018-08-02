@@ -10,12 +10,16 @@
 
 #include <QModelIndex>
 #include <QPushButton>
+
 TransactionDescDialog::TransactionDescDialog(const QModelIndex &idx, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::TransactionDescDialog)
 {
     ui->setupUi(this);
     ui->buttonBox->button(QDialogButtonBox::Close)->setText(tr("Close"));
+    ui->detailText->setStyleSheet("background-color: #FFFFFF; border: none;");
+    ui->buttonsContainerWhite->setStyleSheet("background-color: #FFFFFF;");
+    ui->buttonBox->button(QDialogButtonBox::Close)->setStyleSheet("background-color: #4752E8;");
     // Set stylesheet
     SetObjectStyleSheet(this, StyleSheetNames::ScrollBarDark);
 

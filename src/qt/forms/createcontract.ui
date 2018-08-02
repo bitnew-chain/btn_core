@@ -6,14 +6,17 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>706</width>
-    <height>587</height>
+    <width>674</width>
+    <height>609</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_7">
+   <property name="leftMargin">
+    <number>9</number>
+   </property>
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
@@ -35,10 +38,14 @@
        </property>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
          <item>
           <widget class="QLabel" name="labelTitle">
            <property name="font">
             <font>
+             <family>微软雅黑</family>
              <weight>75</weight>
              <bold>true</bold>
             </font>
@@ -69,6 +76,11 @@
              <height>0</height>
             </size>
            </property>
+           <property name="font">
+            <font>
+             <family>微软雅黑</family>
+            </font>
+           </property>
            <property name="text">
             <string>Solidity</string>
            </property>
@@ -76,6 +88,11 @@
          </item>
          <item>
           <widget class="QLabel" name="labelToken">
+           <property name="font">
+            <font>
+             <family>微软雅黑</family>
+            </font>
+           </property>
            <property name="text">
             <string>Token</string>
            </property>
@@ -107,7 +124,10 @@
           <item>
            <layout class="QGridLayout" name="gridLayout">
             <property name="leftMargin">
-             <number>12</number>
+             <number>15</number>
+            </property>
+            <property name="rightMargin">
+             <number>9</number>
             </property>
             <property name="horizontalSpacing">
              <number>15</number>
@@ -129,6 +149,11 @@
                 <height>65</height>
                </size>
               </property>
+              <property name="font">
+               <font>
+                <family>黑体</family>
+               </font>
+              </property>
               <property name="horizontalScrollBarPolicy">
                <enum>Qt::ScrollBarAlwaysOff</enum>
               </property>
@@ -149,6 +174,11 @@
                   <width>100</width>
                   <height>0</height>
                  </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <family>微软雅黑</family>
+                 </font>
                 </property>
                 <property name="text">
                  <string>Bytecode</string>
@@ -184,6 +214,11 @@
                 <height>65</height>
                </size>
               </property>
+              <property name="font">
+               <font>
+                <family>黑体</family>
+               </font>
+              </property>
               <property name="horizontalScrollBarPolicy">
                <enum>Qt::ScrollBarAlwaysOff</enum>
               </property>
@@ -204,6 +239,11 @@
                   <width>100</width>
                   <height>0</height>
                  </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <family>微软雅黑</family>
+                 </font>
                 </property>
                 <property name="text">
                  <string>Interface (ABI)</string>
@@ -232,8 +272,19 @@
        </item>
        <item>
         <widget class="QGroupBox" name="groupBoxConstructor">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="font">
+          <font>
+           <family>微软雅黑</family>
+          </font>
+         </property>
          <property name="title">
           <string>Constructor</string>
+         </property>
+         <property name="flat">
+          <bool>true</bool>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_2">
           <property name="leftMargin">
@@ -252,8 +303,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>656</width>
-               <height>172</height>
+               <width>628</width>
+               <height>204</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_5"/>
@@ -265,8 +316,19 @@
        </item>
        <item>
         <widget class="QGroupBox" name="groupBoxOptional">
+         <property name="font">
+          <font>
+           <family>微软雅黑</family>
+          </font>
+         </property>
          <property name="title">
           <string>Optional</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+         </property>
+         <property name="flat">
+          <bool>true</bool>
          </property>
          <layout class="QGridLayout" name="gridLayout_2">
           <property name="leftMargin">
@@ -275,12 +337,47 @@
           <property name="topMargin">
            <number>15</number>
           </property>
+          <property name="bottomMargin">
+           <number>6</number>
+          </property>
           <property name="horizontalSpacing">
-           <number>10</number>
+           <number>9</number>
           </property>
           <property name="verticalSpacing">
            <number>6</number>
           </property>
+          <item row="0" column="4">
+           <widget class="BitcoinAmountField" name="lineEditGasPrice"/>
+          </item>
+          <item row="0" column="1">
+           <widget class="QSpinBox" name="lineEditGasLimit">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <spacer name="horizontalSpacer_5">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Expanding</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>60</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
           <item row="2" column="1" colspan="4">
            <widget class="AddressField" name="lineEditSenderAddress">
             <property name="minimumSize">
@@ -288,44 +385,6 @@
               <width>370</width>
               <height>0</height>
              </size>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="labelSenderAddress">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>130</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Sender Address</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="3">
-           <widget class="QLabel" name="labelGasPrice">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>90</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Gas Price</string>
             </property>
            </widget>
           </item>
@@ -348,37 +407,43 @@
             </property>
            </widget>
           </item>
-          <item row="0" column="1">
-           <widget class="QSpinBox" name="lineEditGasLimit">
+          <item row="0" column="3">
+           <widget class="QLabel" name="labelGasPrice">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            <property name="minimumSize">
+             <size>
+              <width>90</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Gas Price</string>
             </property>
            </widget>
           </item>
-          <item row="0" column="4">
-           <widget class="BitcoinAmountField" name="lineEditGasPrice"/>
-          </item>
-          <item row="0" column="2">
-           <spacer name="horizontalSpacer_5">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+          <item row="2" column="0">
+           <widget class="QLabel" name="labelSenderAddress">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Expanding</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
+            <property name="minimumSize">
              <size>
-              <width>60</width>
-              <height>20</height>
+              <width>130</width>
+              <height>0</height>
              </size>
             </property>
-           </spacer>
+            <property name="text">
+             <string>Sender Address</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -393,7 +458,7 @@
       <number>9</number>
      </property>
      <property name="topMargin">
-      <number>9</number>
+      <number>6</number>
      </property>
      <property name="rightMargin">
       <number>9</number>
@@ -419,6 +484,11 @@
      </item>
      <item>
       <widget class="QPushButton" name="pushButtonClearAll">
+       <property name="font">
+        <font>
+         <family>微软雅黑</family>
+        </font>
+       </property>
        <property name="text">
         <string>Clear All</string>
        </property>
@@ -434,7 +504,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>40</width>
+         <width>14</width>
          <height>20</height>
         </size>
        </property>
@@ -442,6 +512,11 @@
      </item>
      <item>
       <widget class="QPushButton" name="pushButtonCreateContract">
+       <property name="font">
+        <font>
+         <family>微软雅黑</family>
+        </font>
+       </property>
        <property name="text">
         <string>Create Contract</string>
        </property>
@@ -453,6 +528,12 @@
  </widget>
  <customwidgets>
   <customwidget>
+   <class>BitcoinAmountField</class>
+   <extends>QLineEdit</extends>
+   <header>bitcoinamountfield.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
    <class>QValidatedTextEdit</class>
    <extends>QTextEdit</extends>
    <header>qvalidatedtextedit.h</header>
@@ -461,12 +542,6 @@
    <class>AddressField</class>
    <extends>QComboBox</extends>
    <header>addressfield.h</header>
-  </customwidget>
-  <customwidget>
-   <class>BitcoinAmountField</class>
-   <extends>QLineEdit</extends>
-   <header>bitcoinamountfield.h</header>
-   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

@@ -4,9 +4,9 @@ Push Button Transparent CSS
 QPushButton {
 	background-color: transparent;
 	padding: 6px;
-	border: none;
+	/*border: none;*/
     min-width: 0px;
-    border-radius: 0px;
+    border-radius: 14px;
 }
 QPushButton::hover{
 	background-color: rgba(89, 89, 92, 20%);

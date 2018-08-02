@@ -10,13 +10,25 @@
     <height>488</height>
    </rect>
   </property>
+  <property name="font">
+   <font>
+    <family>微软雅黑</family>
+   </font>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
+     <property name="leftMargin">
+      <number>2</number>
+     </property>
+     <property name="bottomMargin">
+      <number>2</number>
+     </property>
      <item>
       <widget class="QLabel" name="label_7">
        <property name="font">
         <font>
+         <family>微软雅黑</family>
          <weight>75</weight>
          <bold>true</bold>
         </font>
@@ -53,15 +65,16 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
+       <property name="font">
+        <font>
+         <family>微软雅黑</family>
+        </font>
+       </property>
        <property name="toolTip">
         <string>Clear all fields of the form.</string>
        </property>
        <property name="text">
         <string>Clear</string>
-       </property>
-       <property name="icon">
-        <iconset resource="../bitcoin.qrc">
-         <normaloff>:/icons/remove</normaloff>:/icons/remove</iconset>
        </property>
        <property name="autoDefault">
         <bool>false</bool>
@@ -78,7 +91,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>10</width>
+         <width>14</width>
          <height>20</height>
         </size>
        </property>
@@ -86,12 +99,13 @@
      </item>
      <item>
       <widget class="QPushButton" name="receiveButton">
+       <property name="font">
+        <font>
+         <family>微软雅黑</family>
+        </font>
+       </property>
        <property name="text">
         <string>&amp;Request payment</string>
-       </property>
-       <property name="icon">
-        <iconset resource="../bitcoin.qrc">
-         <normaloff>:/icons/request_payment</normaloff>:/icons/request_payment</iconset>
        </property>
       </widget>
      </item>
@@ -100,7 +114,7 @@
    <item>
     <widget class="QFrame" name="frameRequest">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -112,6 +126,12 @@
       <enum>QFrame::Sunken</enum>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_3">
+      <property name="leftMargin">
+       <number>9</number>
+      </property>
+      <property name="topMargin">
+       <number>3</number>
+      </property>
       <item>
        <layout class="QGridLayout" name="gridLayout">
         <property name="horizontalSpacing">
@@ -119,6 +139,11 @@
         </property>
         <item row="3" column="0">
          <widget class="QLabel" name="label_8">
+          <property name="font">
+           <font>
+            <family>微软雅黑</family>
+           </font>
+          </property>
           <property name="text">
            <string>Address:</string>
           </property>
@@ -126,6 +151,11 @@
         </item>
         <item row="2" column="2">
          <widget class="QLabel" name="label_5">
+          <property name="font">
+           <font>
+            <family>微软雅黑</family>
+           </font>
+          </property>
           <property name="text">
            <string>Use this form to request payments. All fields are &lt;b&gt;optional&lt;/b&gt;.</string>
           </property>
@@ -152,6 +182,11 @@
         </item>
         <item row="5" column="0">
          <widget class="QLabel" name="label">
+          <property name="font">
+           <font>
+            <family>微软雅黑</family>
+           </font>
+          </property>
           <property name="toolTip">
            <string>An optional amount to request. Leave this empty or zero to not request a specific amount.</string>
           </property>
@@ -172,6 +207,11 @@
         </item>
         <item row="4" column="0">
          <widget class="QLabel" name="label_2">
+          <property name="font">
+           <font>
+            <family>微软雅黑</family>
+           </font>
+          </property>
           <property name="toolTip">
            <string>An optional label to associate with the new receiving address.</string>
           </property>
@@ -185,6 +225,11 @@
         </item>
         <item row="6" column="0">
          <widget class="QLabel" name="label_3">
+          <property name="font">
+           <font>
+            <family>微软雅黑</family>
+           </font>
+          </property>
           <property name="toolTip">
            <string>An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the BTN network.</string>
           </property>
@@ -260,6 +305,11 @@
         </item>
         <item row="7" column="2">
          <widget class="QCheckBox" name="reuseAddress">
+          <property name="font">
+           <font>
+            <family>微软雅黑</family>
+           </font>
+          </property>
           <property name="toolTip">
            <string>Reuse one of the previously used receiving addresses. Reusing addresses has security and privacy issues. Do not use this unless re-generating a payment request made before.</string>
           </property>
@@ -298,10 +348,17 @@
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <property name="leftMargin">
+      <number>2</number>
+     </property>
+     <property name="bottomMargin">
+      <number>2</number>
+     </property>
      <item>
       <widget class="QLabel" name="label_6">
        <property name="font">
         <font>
+         <family>微软雅黑</family>
          <weight>75</weight>
          <bold>true</bold>
         </font>
@@ -335,15 +392,16 @@
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="font">
+        <font>
+         <family>黑体</family>
+        </font>
+       </property>
        <property name="toolTip">
         <string>Show the selected request (does the same as double clicking an entry)</string>
        </property>
        <property name="text">
         <string>Show</string>
-       </property>
-       <property name="icon">
-        <iconset resource="../bitcoin.qrc">
-         <normaloff>:/icons/show</normaloff>:/icons/show</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -366,7 +424,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>10</width>
+         <width>14</width>
          <height>20</height>
         </size>
        </property>
@@ -377,15 +435,16 @@
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="font">
+        <font>
+         <family>黑体</family>
+        </font>
+       </property>
        <property name="toolTip">
         <string>Remove the selected entries from the list</string>
        </property>
        <property name="text">
         <string>Remove</string>
-       </property>
-       <property name="icon">
-        <iconset resource="../bitcoin.qrc">
-         <normaloff>:/icons/remove</normaloff>:/icons/remove</iconset>
        </property>
        <property name="autoDefault">
         <bool>false</bool>

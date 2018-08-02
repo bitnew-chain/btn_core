@@ -65,12 +65,12 @@ public:
         QString typeString = ind.data(Qt::DisplayRole).toString();
 
         QRect mainRect = option.rect;
-        QColor txColor = index.row() % 2 ? QColor("#393939") : QColor("#f4f4f4");
+        QColor txColor = index.row() % 2 ? QColor("#f0f0f0") : QColor("#ffffff");
         painter->fillRect(mainRect, txColor);
 
         QPen pen;
         pen.setWidth(2);
-        pen.setColor(QColor("#009ee5"));
+        pen.setColor(QColor("#AFB3F5"));
         painter->setPen(pen);
         bool selected = option.state & QStyle::State_Selected;
         if(selected)
@@ -78,19 +78,24 @@ public:
             painter->drawRect(mainRect.x()+1, mainRect.y()+1, mainRect.width()-2, mainRect.height()-2);
         }
 
-        QColor foreground("#dedede");
+        //QColor foreground("#dedede");
+		QColor foreground("#404A67");
         painter->setPen(foreground);
 
         QRect dateRect(mainRect.left() + MARGIN, mainRect.top(), DATE_WIDTH, TX_SIZE);
-        painter->drawText(dateRect, Qt::AlignLeft|Qt::AlignVCenter, GUIUtil::dateTimeStr(date));
-	
+	QFont font;
+	font.setPointSize(10);
+	painter->setFont(font);
+        painter->drawText(dateRect, Qt::AlignLeft|Qt::AlignVCenter, tr("%1").arg(GUIUtil::dateTimeStr(date)));
+
         int topMargin = (TX_SIZE - DECORATION_SIZE) / 2;
         QRect decorationRect(dateRect.topRight() + QPoint(MARGIN, topMargin), QSize(DECORATION_SIZE, DECORATION_SIZE));
         icon.paint(painter, decorationRect);
 
         QRect typeRect(decorationRect.right() + MARGIN, mainRect.top(), TYPE_WIDTH, TX_SIZE);
         //painter->drawText(typeRect, Qt::AlignLeft|Qt::AlignVCenter, typeString);
-	painter->drawText(typeRect, Qt::AlignLeft|Qt::AlignVCenter, tr("%1").arg(typeString));
+        painter->drawText(typeRect, Qt::AlignLeft|Qt::AlignVCenter, tr("%1").arg(typeString));
+	
 
         bool watchOnly = index.data(TransactionTableModel::WatchonlyRole).toBool();
 
@@ -113,23 +118,24 @@ public:
         QString clippedAddress = fmName.elidedText(address, Qt::ElideRight, addressWidth);
 
         QRect addressRect(typeRect.right() + addressMargin, mainRect.top(), addressWidth, TX_SIZE);
-        painter->drawText(addressRect, Qt::AlignLeft|Qt::AlignVCenter, clippedAddress);
+        painter->drawText(addressRect, Qt::AlignLeft|Qt::AlignVCenter, tr("%1").arg(clippedAddress));
 
         QFont amountFont = option.font;
         amountFont.setBold(true);
+	amountFont.setPointSize(12);
         painter->setFont(amountFont);
 
         if(amount < 0)
         {
-            foreground = COLOR_NEGATIVE;
+		foreground = QColor("#4655EA");
         }
         else if(!confirmed)
         {
-            foreground = COLOR_UNCONFIRMED;
+		foreground = QColor("#4655EA");
         }
         else
         {
-            foreground = QColor("#000000");
+		foreground = QColor("#4655EA");
         }
         painter->setPen(foreground);
 
@@ -140,7 +146,7 @@ public:
         }
 
         QRect amountRect(addressRect.right() + MARGIN, addressRect.top(), AMOUNT_WIDTH, TX_SIZE);
-        painter->drawText(amountRect, Qt::AlignRight|Qt::AlignVCenter, amountText);
+        painter->drawText(amountRect, Qt::AlignRight|Qt::AlignVCenter, tr("%1").arg(amountText));
 
         painter->restore();
     }
@@ -174,12 +180,13 @@ public:
         QRect mainRect = option.rect;
         mainRect.setWidth(option.rect.width());
 
-        painter->fillRect(mainRect, QColor("#383938"));
+        QColor txColor = index.row() % 2 ? QColor("#f0f0f0") : QColor("#ffffff");
+        painter->fillRect(mainRect, txColor);
 
         QRect hLineRect(mainRect.left(), mainRect.bottom(), mainRect.width(), 1);
         painter->fillRect(hLineRect, QColor("#f4f4f4"));
 
-        QColor foreground("#dedede");
+        QColor foreground("#404A67");
         painter->setPen(foreground);
         
         QFont font = option.font;
@@ -236,12 +243,6 @@ OverviewPage::OverviewPage(const PlatformStyle *platformStyle, QWidget *parent) 
     SetObjectStyleSheet(ui->labelWalletStatus, StyleSheetNames::ButtonTransparent);
     SetObjectStyleSheet(ui->labelTokenStatus, StyleSheetNames::ButtonTransparent);
     SetObjectStyleSheet(ui->labelTransactionsStatus, StyleSheetNames::ButtonTransparent);
-
-    if (!platformStyle->getImagesOnButtons()) {
-        ui->buttonAddToken->setIcon(QIcon());
-    } else {
-        ui->buttonAddToken->setIcon(platformStyle->MultiStatesIcon(":/icons/add", PlatformStyle::PushButton));
-    }
 
     // use a MultiStatesIcon for the "out of sync warning" icon
     QIcon icon = platformStyle->MultiStatesIcon(":/icons/warning", PlatformStyle::PushButton);

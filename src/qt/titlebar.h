@@ -43,6 +43,7 @@ public:
      * @param info Information about tabs
      */
     void setTabBarInfo(QObject* info);
+    void change_lblBalance();
 
 Q_SIGNALS:
 
@@ -64,6 +65,7 @@ private:
     WalletModel *model;
     TabBarInfo* m_tab;
     QIcon m_iconCloseTab;
+    bool setlblBalance;
 };
 
 #endif // TITLEBAR_H

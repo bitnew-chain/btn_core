@@ -26,10 +26,10 @@
 #include <QCloseEvent>
 #include <QLabel>
 #include <QRegExp>
+#include <QPushButton>
 #include <QTextTable>
 #include <QTextCursor>
 #include <QVBoxLayout>
-#include <QPushButton>
 
 /** "Help message" or "About" dialog box */
 HelpMessageDialog::HelpMessageDialog(QWidget *parent, bool about) :
@@ -37,8 +37,7 @@ HelpMessageDialog::HelpMessageDialog(QWidget *parent, bool about) :
     ui(new Ui::HelpMessageDialog)
 {
     ui->setupUi(this);
-
-    ui->okButton->button(QDialogButtonBox::Ok)->setText(tr("Ok"));
+    (ui->okButton->button(QDialogButtonBox::Ok))->setText(tr("Ok"));
 
     QString version = tr(PACKAGE_NAME) + " " + tr("version") + " " + QString::fromStdString(FormatFullVersion());
     /* On x86 add a bit specifier to the version so that users can distinguish between
@@ -55,7 +54,7 @@ HelpMessageDialog::HelpMessageDialog(QWidget *parent, bool about) :
         setWindowTitle(tr("About %1").arg(tr(PACKAGE_NAME)));
 
         /// HTML-format the license message from the core
-        //QString licenseInfo = QString::fromStdString(LicenseInfo());
+        //QString licenseInfo = QString::fromStdString(LicenseInfo_CN());
 	QString licenseInfo = LicenseInfo_CN();
         QString licenseInfoHTML = licenseInfo;
         // Make URLs clickable
@@ -129,11 +128,12 @@ HelpMessageDialog::HelpMessageDialog(QWidget *parent, bool about) :
                 cursor.insertTable(1, 2, tf);
             }
         }
-
         ui->helpMessage->moveCursor(QTextCursor::Start);
         ui->scrollArea->setVisible(false);
         ui->aboutLogo->setVisible(false);
     }
+    ui->helpMessage->setStyleSheet("background-color: #FFFFFF; border: none;");
+    ui->aboutMessage->setStyleSheet("background-color: #FFFFFF; border: none;");
 }
 
 HelpMessageDialog::~HelpMessageDialog()

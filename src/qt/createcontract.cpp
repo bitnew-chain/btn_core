@@ -55,6 +55,7 @@ CreateContract::CreateContract(const PlatformStyle *platformStyle, QWidget *pare
     setLinkLabels();
     m_ABIFunctionField = new ABIFunctionField(platformStyle, ABIFunctionField::Create, ui->scrollAreaConstructor);
     ui->scrollAreaConstructor->setWidget(m_ABIFunctionField);
+    m_ABIFunctionField->setStyleSheet("background-color: #FFFFFF;");
     ui->labelBytecode->setToolTip(tr("The bytecode of the contract"));
     ui->labelSenderAddress->setToolTip(tr("The BTN address that will be used to create the contract."));
 
@@ -68,6 +69,13 @@ CreateContract::CreateContract(const PlatformStyle *platformStyle, QWidget *pare
     ui->lineEditGasLimit->setMaximum(DEFAULT_GAS_LIMIT_OP_CREATE);
     ui->lineEditGasLimit->setValue(DEFAULT_GAS_LIMIT_OP_CREATE);
     ui->pushButtonCreateContract->setEnabled(false);
+
+    // Set Style
+    ui->textEditBytecode->setStyleSheet("background-color: #FFFFFF; border: 1px solid #D8D8D8;");
+    ui->textEditInterface->setStyleSheet("background-color: #FFFFFF; border: 1px solid #D8D8D8;");
+    ui->lineEditGasLimit->setStyleSheet("background-color: #FFFFFF; border: 1px solid #D8D8D8;");
+    ui->lineEditGasPrice->setStyleSheet("background-color: #FFFFFF; border: 1px solid #D8D8D8;");
+    ui->lineEditSenderAddress->setStyleSheet("background-color: #FFFFFF; border: 1px solid #D8D8D8;");
 
     // Create new PRC command line interface
     QStringList lstMandatory;
@@ -108,14 +116,12 @@ CreateContract::~CreateContract()
 void CreateContract::setLinkLabels()
 {
     ui->labelSolidity->setOpenExternalLinks(true);
-    //ui->labelSolidity->setText("<a href=\"https://ethereum.github.io/browser-solidity/\">Solidity compiler</a>");
     QString tmpStr;
-    tmpStr = tr("<a href=\"https://ethereum.github.io/browser-solidity/\">%1</a>").arg(tr("Solidity compiler"));
+    tmpStr = tr("<a style='color: #4950E7;' href=\"https://ethereum.github.io/browser-solidity/\">%1</a>").arg(tr("Solidity compiler"));
     ui->labelSolidity->setText(tmpStr);
 
     ui->labelToken->setOpenExternalLinks(true);
-    //ui->labelToken->setText("<a href=\"https://ethereum.org/token#the-code\">Token template</a>");
-    tmpStr = tr("<a href=\"https://ethereum.org/token#the-code\">%1</a>").arg(tr("Token template"));
+    tmpStr = tr("<a style='color: #4950E7;' href=\"https://ethereum.org/token#the-code\">%1</a>").arg(tr("Token template"));
     ui->labelToken->setText(tmpStr);
 }
 
@@ -211,6 +217,7 @@ void CreateContract::on_createContractClicked()
         QString questionString = tr("Are you sure you want to create contract? <br />");
 
         SendConfirmationDialog confirmationDialog(tr("Confirm contract creation."), questionString, 3, this);
+        confirmationDialog.button(QMessageBox::Cancel)->setStyleSheet("background-color: #FFFFFF; border: 1px solid #4752E8; color: #4752E8;");
         confirmationDialog.exec();
         QMessageBox::StandardButton retval = (QMessageBox::StandardButton)confirmationDialog.result();
         if(retval == QMessageBox::Yes)
