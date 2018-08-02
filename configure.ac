@@ -44,6 +44,7 @@ if test "x${CXXFLAGS+set}" = "xset"; then
 else
   CXXFLAGS_overridden=no
 fi
+:${CXXFLAGS=""}
 AC_PROG_CXX
 
 dnl By default, libtool for mingw refuses to link static libs into a dll for
@@ -71,6 +72,7 @@ fi
 AC_PROG_OBJCXX
 ])
 
+: ${CFLAGS=""}
 dnl Libtool init checks.
 LT_INIT([pic-only])
 
