@@ -64,8 +64,9 @@ SplashScreen::SplashScreen(Qt::WindowFlags f, const NetworkStyle *networkStyle) 
     pixPaint.fillRect(mainRect, QColor("#030509"));
 
     // draw background
-    // QRect rectBg(QPoint(-50, -50), QSize(splashSize.width() + 50, splashSize.height() + 50));
-    QRect rectBg(QPoint(-25, -25), QSize(splashSize.width() + 50, splashSize.height() + 50));
+    //QRect rectBg(QPoint(-50, -50), QSize(splashSize.width() + 50, splashSize.height() + 50));
+    //QRect rectBg(QPoint(-25, -25), QSize(splashSize.width() + 50, splashSize.height() + 50));
+    QRect rectBg(QPoint(0, 0), QSize(splashSize.width(), splashSize.height()));
     QPixmap bg(":/styles/app-icons/splash_bg");
     pixPaint.drawPixmap(rectBg, bg);
 

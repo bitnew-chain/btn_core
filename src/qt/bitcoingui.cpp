@@ -565,6 +565,9 @@ void BitcoinGUI::createToolBars()
     {
         // Create custom tool bar component
         appNavigationBar = new NavigationBar();
+#ifdef Q_OS_MAC
+        addDockWindows(Qt::LeftDockWidgetArea, new QLabel());
+#endif
         addDockWindows(Qt::LeftDockWidgetArea, appNavigationBar);
 
         // Fill the component with actions

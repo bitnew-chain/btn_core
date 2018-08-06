@@ -84,7 +84,7 @@ public:
 
         QRect dateRect(mainRect.left() + MARGIN, mainRect.top(), DATE_WIDTH, TX_SIZE);
 	QFont font;
-	font.setPointSize(10);
+	//font.setPointSize(10);
 	painter->setFont(font);
         painter->drawText(dateRect, Qt::AlignLeft|Qt::AlignVCenter, tr("%1").arg(GUIUtil::dateTimeStr(date)));
 
@@ -122,7 +122,7 @@ public:
 
         QFont amountFont = option.font;
         amountFont.setBold(true);
-	amountFont.setPointSize(12);
+	//amountFont.setPointSize(12);
         painter->setFont(amountFont);
 
         if(amount < 0)
