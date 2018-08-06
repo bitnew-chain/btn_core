@@ -29,7 +29,7 @@ Build Build BTN Core
 
 1. Clone the btn source code and cd into `btn`
 
-        git clone --recursive https://github.com/btnproject/btn.git
+        git clone --recursive https://github.com/bitnew-chain/btn_core.git
         cd btn
         git submodule update --init --recursive
 
