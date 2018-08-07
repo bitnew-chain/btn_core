@@ -317,7 +317,7 @@ BitcoinGUI::BitcoinGUI(const PlatformStyle *_platformStyle, const NetworkStyle *
 #endif
 
 #ifdef Q_OS_MAC
-	setStyleSheet("#QMainWindow {background-image:url(:/styles/app-icons/bg_mac.png);}");
+     setStyleSheet("QMainWindow {background-image:url(:/styles/app-icons/bg_mac); background-position: top left; background-repeat: repeat;}");
 #endif
 }
 
