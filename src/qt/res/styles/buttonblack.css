@@ -2,52 +2,26 @@
 Button Black CSS
 --------------------------------------------*/
 QPushButton {
-    /*
-    color: white;
-	background: #4752e8;
-	border: none;
-    border-radius: 12px;
-	min-width: 5em;
-    padding: 6px;
-	margin: 0px;
-    */
-    /*border: 1px solid #4752E8; */
     background-color: #FFFFFF;
     color: #4752E8;
     border-radius: 14px;
 }
 QPushButton:hover{
-	/*background: #0a16bc;*/
-    /*border: 1px solid #4752E8;*/
     background: #FFFFFF;
     color: #4752E8;
 }
 QPushButton:pressed {
-    /*
-    background: #0a16bc;
-    border: none;
-    color: white;
-    */
-    /*border: 1px solid #4752E8;*/
     background: #FFFFFF;
     color: #4752E8;
 }
 QPushButton::disabled {
-    /*
-    color: white;
-	background: #D7D9FB;
-    */
     color: #ACAFBA;
     background-color: #E1E1E1;
-    /*background: #FFFFFF;*/
-    /*border: 1px solid #4752E8;*/
-    /*color: #4752E8;*/
 }
 QPushButton::disabled#clearButton{
     color: #ACAFBA;
     border: none;
     background-color: #E1E1E1;
-    /*border: 1px solid #4752E8;*/
 }
 QPushButton#clearButton{
     background-color: #FFFFFF;
@@ -58,7 +32,6 @@ QPushButton::disabled#pushButtonClearAll{
     color: #ACAFBA;
     border: none;
     background-color: #E1E1E1;
-    /*border: 1px solid #4752E8;*/
 }
 QPushButton#pushButtonClearAll{
     background-color: #FFFFFF;

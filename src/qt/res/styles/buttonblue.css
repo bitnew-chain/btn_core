@@ -3,25 +3,20 @@ Button Blue CSS
 --------------------------------------------*/
 QPushButton {
     color: white;
-	background: #4752e8;
-    /*border: none;*/
-    /*border-radius: 12px;*/
+    background: #4752e8;
     border-radius: 14px;
-    /*box-shadow: 0 2px 8px 0 rgba(71,82,232,0.31);*/
     min-width: 5em;
     padding: 6px;
     margin: 0px;
 }
 QPushButton:hover{
-	background: #0a16bc;
+    background: #0a16bc;
 }
 QPushButton:pressed {
-	background: #0a16bc;
+    background: #0a16bc;
     color: white;
 }
 QPushButton::disabled {
-    /*color: white;
-	background: #d7d9f8;*/
     color: #ACAFBA;
     background-color: #E1E1E1;
 }

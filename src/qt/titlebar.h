@@ -43,7 +43,6 @@ public:
      * @param info Information about tabs
      */
     void setTabBarInfo(QObject* info);
-    void change_lblBalance();
 
 Q_SIGNALS:
 

@@ -86,8 +86,3 @@ void TitleBar::on_navigationResized(const QSize &_size)
     ui->widgetLogo->setFixedWidth(_size.width());
 }
 
-void TitleBar::change_lblBalance()
-{
-    ui->lblBalance->setGeometry(220, 1, 180, 38);
-    ui->lblBalance->setParent(this);
-}

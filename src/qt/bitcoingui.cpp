@@ -1321,12 +1321,6 @@ void BitcoinGUI::showNormalIfMinimized(bool fToggleHidden)
         hide();
 }
 
-void BitcoinGUI::change_titleBalance_location()
-{
-    if (appTitleBar)
-        appTitleBar->change_lblBalance();
-}
-
 void BitcoinGUI::toggleHidden()
 {
     showNormalIfMinimized(true);
