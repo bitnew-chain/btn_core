@@ -97,15 +97,20 @@ ReceiveRequestDialog::ReceiveRequestDialog(QWidget *parent) :
 {
     ui->setupUi(this);
 
+
     SetObjectStyleSheet(ui->btnCopyURI, StyleSheetNames::ButtonWhite);
     SetObjectStyleSheet(ui->btnSaveAs, StyleSheetNames::ButtonWhite);
     SetObjectStyleSheet(ui->btnCopyAddress, StyleSheetNames::ButtonWhite);
+    ui->lblQRCode->setStyleSheet("background: #FFFFFF;");
+    ui->outUri->setStyleSheet("background: #FFFFFF;");
 
 #ifndef USE_QRCODE
     ui->btnSaveAs->setVisible(false);
     ui->lblQRCode->setVisible(false);
 #endif
-
+	Qt::WindowFlags flags = Qt::Dialog;
+	flags |= Qt::WindowCloseButtonHint;
+	setWindowFlags(flags);
     ui->buttonBox->button(QDialogButtonBox::Close)->setText(tr("Close"));
     connect(ui->btnSaveAs, SIGNAL(clicked()), ui->lblQRCode, SLOT(saveImage()));
 }

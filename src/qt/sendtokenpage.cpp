@@ -40,7 +40,12 @@ SendTokenPage::SendTokenPage(QWidget *parent) :
     // Setup ui components
     ui->setupUi(this);
 
-    // Set stylesheet
+    //Set stylesheet
+    ui->lineEditAmount->setStyleSheet("background-color: #FFFFFF;  border: 1px solid #D8D8D8;");
+    ui->lineEditGasLimit->setStyleSheet("background-color: #FFFFFF;  border: 1px solid #D8D8D8;");
+    ui->lineEditGasPrice->setStyleSheet("background-color: #FFFFFF;  border: 1px solid #D8D8D8;");
+    ui->clearButton->setStyleSheet("background-color: #FFFFFF; border; 1px solid #4752E8; color: #4752E8;");
+    ui->confirmButton->setStyleSheet("color: white; background: #4752E8; border-radius: 14px;");
     SetObjectStyleSheet(ui->clearButton, StyleSheetNames::ButtonBlack);
 
     ui->labelPayTo->setToolTip(tr("The address that will receive the tokens."));

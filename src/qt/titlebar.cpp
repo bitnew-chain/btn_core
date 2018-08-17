@@ -5,10 +5,11 @@
 #include "tabbarinfo.h"
 
 #include <QPixmap>
+#include <QPalette>
 #include "platformstyle.h"
 
 namespace TitleBar_NS {
-const int titleHeight = 35;
+const int titleHeight = 45;
 }
 using namespace TitleBar_NS;
 
@@ -22,7 +23,11 @@ TitleBar::TitleBar(const PlatformStyle *platformStyle, QWidget *parent) :
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     ui->tabWidget->setDrawBase(false);
     ui->tabWidget->setTabsClosable(true);
+
+    ui->tabWidget->setStyleSheet("background-color: #F0F2F8;");
     setFixedHeight(titleHeight);
+    ui->lblBalance->setGeometry(220, 1, 180, 38);
+    ui->lblBalance->setParent(this);
     m_iconCloseTab = platformStyle->TextColorIcon(":/icons/quit");
 }
 
@@ -70,6 +75,9 @@ void TitleBar::setBalance(const CAmount& balance, const CAmount& unconfirmedBala
     if(model && model->getOptionsModel())
     {
         ui->lblBalance->setText(BitcoinUnits::formatWithUnit(model->getOptionsModel()->getDisplayUnit(), balance));
+        ui->lblBalance->setStyleSheet("color: #4655EA;");
+        ui->lblBalance->setGeometry(220, 1, 180, 38);
+        ui->lblBalance->setParent(this);
     }
 }
 
@@ -77,3 +85,4 @@ void TitleBar::on_navigationResized(const QSize &_size)
 {
     ui->widgetLogo->setFixedWidth(_size.width());
 }
+

@@ -28,10 +28,13 @@ AskPassphraseDialog::AskPassphraseDialog(Mode _mode, QWidget *parent) :
     fCapsLock(false)
 {
     ui->setupUi(this);
+
     ui->buttonBox->button(QDialogButtonBox::Ok)->setText(tr("Ok"));
     ui->buttonBox->button(QDialogButtonBox::Cancel)->setText(tr("Cancel"));
     SetObjectStyleSheet(ui->buttonBox->button(QDialogButtonBox::Cancel), StyleSheetNames::ButtonWhite);
     SetObjectStyleSheet(ui->buttonBox->button(QDialogButtonBox::Ok), StyleSheetNames::ButtonBlue);
+    ui->buttonBox->button(QDialogButtonBox::Ok)->setStyleSheet("border-radius: 12px;");
+    ui->buttonBox->button(QDialogButtonBox::Cancel)->setStyleSheet("color: #4752E8; border: 1px solid #4752E8; background: #ffffff; border-radius: 12px;");
 
     ui->passEdit1->setMinimumSize(ui->passEdit1->sizeHint());
     ui->passEdit2->setMinimumSize(ui->passEdit2->sizeHint());
@@ -149,10 +152,10 @@ void AskPassphraseDialog::accept()
                 {
                     //QMessageBox::critical(this, tr("Wallet encryption failed"),
                     //                     tr("Wallet encryption failed due to an internal error. Your wallet was not encrypted."));
-		    QMessageBox btnRetVal(QMessageBox::Critical, tr("Wallet encryption failed"), 
-						tr("Wallet encryption failed due to an internal error. Your wallet was not encrypted."));
-		    btnRetVal.setButtonText(QMessageBox::Ok, tr("Ok"));
-		    btnRetVal.exec();
+					QMessageBox btnRetVal(QMessageBox::Critical, tr("Wallet encryption failed"), 
+											tr("Wallet encryption failed due to an internal error. Your wallet was not encrypted."));
+					btnRetVal.setButtonText(QMessageBox::Ok, tr("Ok"));
+					btnRetVal.exec();
                 }
                 QDialog::accept(); // Success
             }

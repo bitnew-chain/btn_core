@@ -5,7 +5,7 @@ define(_CLIENT_VERSION_MINOR, 14)
 define(_CLIENT_VERSION_REVISION, 15)
 define(_CLIENT_VERSION_BUILD, 1)
 define(_CLIENT_VERSION_IS_RELEASE, true)
-define(_COPYRIGHT_YEAR, 2017)
+define(_COPYRIGHT_YEAR, 2018)
 define(_COPYRIGHT_HOLDERS,[The %s developers])
 define(_COPYRIGHT_HOLDERS_SUBSTITUTION,[[BTN Core]])
 AC_INIT([BTN Core],[_CLIENT_VERSION_MAJOR._CLIENT_VERSION_MINOR._CLIENT_VERSION_REVISION],[https://github.com/btnproject/btn/issues],[btn],[https://btn.org/])
@@ -44,6 +44,7 @@ if test "x${CXXFLAGS+set}" = "xset"; then
 else
   CXXFLAGS_overridden=no
 fi
+:${CXXFLAGS=""}
 AC_PROG_CXX
 
 dnl By default, libtool for mingw refuses to link static libs into a dll for
@@ -71,6 +72,7 @@ fi
 AC_PROG_OBJCXX
 ])
 
+: ${CFLAGS=""}
 dnl Libtool init checks.
 LT_INIT([pic-only])
 

@@ -41,7 +41,19 @@ OptionsDialog::OptionsDialog(QWidget *parent, bool enableWallet) :
 
     SetObjectStyleSheet(ui->resetButton, StyleSheetNames::ButtonWhite);
     SetObjectStyleSheet(ui->okButton, StyleSheetNames::ButtonBlue);
-    SetObjectStyleSheet(ui->cancelButton, StyleSheetNames::ButtonBlue);
+    ui->cancelButton->setStyleSheet("color: #4752E8; background: #ffffff; border: 1px solid #4752E8; border-radius: 12px;");
+    ui->databaseCache->setStyleSheet("background-color: #FFFFFF;  border: 1px solid #D8D8D8;");
+    ui->threadsScriptVerif->setStyleSheet("background-color: #FFFFFF;  border: 1px solid #D8D8D8;");
+    ui->reserveBalance->setStyleSheet("background-color: #FFFFFF;  border: 1px solid #D8D8D8;");
+    ui->lang->setStyleSheet("background-color: #FFFFFF;  border: 1px solid #D8D8D8;");
+    ui->unit->setStyleSheet("background-color: #FFFFFF;  border: 1px solid #D8D8D8;");
+    ui->frame->setStyleSheet("background-color: #FFFFFF;");
+    
+    ui->tabMain->setStyleSheet("background-color: #FFFFFF;");
+    ui->tabWallet->setStyleSheet("background-color: #FFFFFF;");
+    ui->tabNetwork->setStyleSheet("background-color: #FFFFFF;");
+    ui->tabWindow->setStyleSheet("background-color: #FFFFFF;");
+    ui->tabDisplay->setStyleSheet("background-color: #FFFFFF;");
 
     /* Main elements init */
     ui->databaseCache->setMinimum(nMinDbCache);
@@ -245,7 +257,8 @@ void OptionsDialog::on_resetButton_clicked()
 			tr("Client restart required to activate changes.") + "<br><br>" + tr("Client will be shut down. Do you want to proceed?"));
 	QPushButton *YesButton = btnRetVal.addButton(tr("YES"), QMessageBox::AcceptRole);
 	QPushButton *CancelButton = btnRetVal.addButton(tr("CANCEL"), QMessageBox::RejectRole);
-	btnRetVal.exec();
+        CancelButton->setStyleSheet("background-color: #FFFFFF; border: 1px solid #4752E8; color: #4752E8;");
+		btnRetVal.exec();
         //if(btnRetVal == QMessageBox::Cancel)
 	if((QPushButton*)btnRetVal.clickedButton() == CancelButton)
             return;

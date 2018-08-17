@@ -64,6 +64,7 @@ private:
     WalletModel *model;
     TabBarInfo* m_tab;
     QIcon m_iconCloseTab;
+    bool setlblBalance;
 };
 
 #endif // TITLEBAR_H

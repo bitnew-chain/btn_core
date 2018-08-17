@@ -32,11 +32,11 @@ SignVerifyMessageDialog::SignVerifyMessageDialog(const PlatformStyle *_platformS
     ui->addressBookButton_SM->setIcon(platformStyle->MultiStatesIcon(":/icons/address-book", PlatformStyle::PushButton));
     ui->pasteButton_SM->setIcon(platformStyle->MultiStatesIcon(":/icons/editpaste", PlatformStyle::PushButton));
     ui->copySignatureButton_SM->setIcon(platformStyle->MultiStatesIcon(":/icons/editcopy", PlatformStyle::PushButton));
-    ui->signMessageButton_SM->setIcon(platformStyle->MultiStatesIcon(":/icons/edit", PlatformStyle::PushButton));
-    ui->clearButton_SM->setIcon(platformStyle->MultiStatesIcon(":/icons/remove", PlatformStyle::PushButton, 0x5a5a5d));
     ui->addressBookButton_VM->setIcon(platformStyle->MultiStatesIcon(":/icons/address-book", PlatformStyle::PushButton));
-    ui->verifyMessageButton_VM->setIcon(platformStyle->MultiStatesIcon(":/icons/transaction_0", PlatformStyle::PushButton));
-    ui->clearButton_VM->setIcon(platformStyle->MultiStatesIcon(":/icons/remove", PlatformStyle::PushButton, 0x5a5a5d));
+    ui->messageIn_SM->setStyleSheet("background-color: #FFFFFF; border: 1px solid #D8D8D8;");
+    ui->messageIn_VM->setStyleSheet("background-color: #FFFFFF; border: 1px solid #D8D8D8;");
+    ui->tabSignMessage->setStyleSheet("background-color: #FFFFFF;");
+    ui->tabVerifyMessage->setStyleSheet("background-color: #FFFFFF;");
 
     SetObjectStyleSheet(ui->clearButton_SM, StyleSheetNames::ButtonWhite);
     SetObjectStyleSheet(ui->clearButton_VM, StyleSheetNames::ButtonWhite);

@@ -44,16 +44,14 @@ SendCoinsDialog::SendCoinsDialog(const PlatformStyle *_platformStyle, QWidget *p
     ui->setupUi(this);
 
     // Set stylesheet
+    ui->customFee->setStyleSheet("background-color: #FFFFFF; border: 1px solid #D8D8D8;");
+    ui->scrollAreaWidgetContents->setStyleSheet("background-color: #FFFFFF;");
+    ui->frameFeeSelection->setStyleSheet("background-color: #FFFFFF;");
     SetObjectStyleSheet(ui->clearButton, StyleSheetNames::ButtonBlack);
     SetObjectStyleSheet(ui->addButton, StyleSheetNames::ButtonBlue);
     SetObjectStyleSheet(ui->sendButton, StyleSheetNames::ButtonBlue);
     SetObjectStyleSheet(ui->pushButtonCoinControl, StyleSheetNames::ButtonBlack);
-
-    if (!_platformStyle->getImagesOnButtons()) {
-        ui->addButton->setIcon(QIcon());
-    } else {
-        ui->addButton->setIcon(_platformStyle->MultiStatesIcon(":/icons/add_recipient", PlatformStyle::PushButton));
-    }
+    ui->addButton->setIcon(QIcon());
 
     GUIUtil::setupAddressWidget(ui->lineEditCoinControlChange, this);
 

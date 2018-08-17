@@ -359,7 +359,7 @@ bool RPCConsole::RPCParseCommandLine(std::string &strResult, const std::string &
         }
         *pstrFilteredOut = strCommand;
         for (auto i = filter_ranges.rbegin(); i != filter_ranges.rend(); ++i) {
-            pstrFilteredOut->replace(i->first, i->second - i->first, "(â€¦)");
+            pstrFilteredOut->replace(i->first, i->second - i->first, "(â€");
         }
     }
     switch(state) // final state
@@ -431,12 +431,12 @@ RPCConsole::RPCConsole(const PlatformStyle *_platformStyle, QWidget *parent) :
     SetObjectStyleSheet(ui->btnClearTrafficGraph, StyleSheetNames::ButtonBlue);
     SetObjectStyleSheet(ui->peerWidget, StyleSheetNames::TableViewLight);
     SetObjectStyleSheet(ui->banlistWidget, StyleSheetNames::TableViewLight);
+    ui->messagesWidget->setStyleSheet("background-color: #FFFFFF; border: 1px solid #D8D8D8;");
+    ui->peerWidget->setStyleSheet("background-color: #FFFFFF; border: 1px solid #D8D8D8");
+    ui->banlistWidget->setStyleSheet("background-color: #FFFFFF; border: 1px solid #D8D8D8");
 
     ui->openDebugLogfileButton->setToolTip(ui->openDebugLogfileButton->toolTip().arg(tr(PACKAGE_NAME)));
 
-    if (platformStyle->getImagesOnButtons()) {
-        ui->openDebugLogfileButton->setIcon(platformStyle->MultiStatesIcon(":/icons/export", PlatformStyle::PushButton));
-    }
     ui->clearButton->setIcon(platformStyle->MultiStatesIcon(":/icons/remove", PlatformStyle::PushButton));
     ui->fontBiggerButton->setIcon(platformStyle->MultiStatesIcon(":/icons/fontbigger", PlatformStyle::PushButton));
     ui->fontSmallerButton->setIcon(platformStyle->MultiStatesIcon(":/icons/fontsmaller", PlatformStyle::PushButton));

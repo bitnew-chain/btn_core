@@ -41,12 +41,22 @@
      <item row="0" column="2">
       <layout class="QHBoxLayout" name="horizontalLayout_4">
        <property name="bottomMargin">
-        <number>9</number>
+        <number>8</number>
        </property>
        <item>
         <widget class="QLabel" name="labelTokens">
+         <property name="font">
+          <font>
+           <family>微软雅黑</family>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
          <property name="text">
           <string>Other Tokens</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
          </property>
         </widget>
        </item>
@@ -84,6 +94,13 @@
        </item>
        <item>
         <widget class="QPushButton" name="buttonAddToken">
+         <property name="font">
+          <font>
+           <family>微软雅黑</family>
+           <weight>50</weight>
+           <bold>false</bold>
+          </font>
+         </property>
          <property name="text">
           <string>Add</string>
          </property>
@@ -134,6 +151,7 @@
            <widget class="QLabel" name="labelWatchPending">
             <property name="font">
              <font>
+              <family>微软雅黑</family>
               <weight>75</weight>
               <bold>true</bold>
              </font>
@@ -159,6 +177,7 @@
            <widget class="QLabel" name="labelUnconfirmed">
             <property name="font">
              <font>
+              <family>微软雅黑</family>
               <weight>75</weight>
               <bold>true</bold>
              </font>
@@ -184,6 +203,7 @@
            <widget class="QLabel" name="labelImmature">
             <property name="font">
              <font>
+              <family>微软雅黑</family>
               <weight>75</weight>
               <bold>true</bold>
              </font>
@@ -207,6 +227,11 @@
           </item>
           <item row="3" column="0">
            <widget class="QLabel" name="labelImmatureText">
+            <property name="font">
+             <font>
+              <family>微软雅黑</family>
+             </font>
+            </property>
             <property name="text">
              <string>Immature:</string>
             </property>
@@ -214,6 +239,11 @@
           </item>
           <item row="0" column="3">
            <widget class="QLabel" name="labelWatchonly">
+            <property name="font">
+             <font>
+              <family>微软雅黑</family>
+             </font>
+            </property>
             <property name="text">
              <string>Watch-only:</string>
             </property>
@@ -224,6 +254,11 @@
           </item>
           <item row="1" column="0">
            <widget class="QLabel" name="labelBalanceText">
+            <property name="font">
+             <font>
+              <family>微软雅黑</family>
+             </font>
+            </property>
             <property name="text">
              <string>Available:</string>
             </property>
@@ -233,6 +268,7 @@
            <widget class="QLabel" name="labelBalance">
             <property name="font">
              <font>
+              <family>微软雅黑</family>
               <weight>75</weight>
               <bold>true</bold>
              </font>
@@ -258,6 +294,7 @@
            <widget class="QLabel" name="labelWatchAvailable">
             <property name="font">
              <font>
+              <family>微软雅黑</family>
               <weight>75</weight>
               <bold>true</bold>
              </font>
@@ -281,6 +318,11 @@
           </item>
           <item row="2" column="0">
            <widget class="QLabel" name="labelPendingText">
+            <property name="font">
+             <font>
+              <family>微软雅黑</family>
+             </font>
+            </property>
             <property name="text">
              <string>Pending:</string>
             </property>
@@ -288,6 +330,11 @@
           </item>
           <item row="0" column="2">
            <widget class="QLabel" name="labelSpendable">
+            <property name="font">
+             <font>
+              <family>微软雅黑</family>
+             </font>
+            </property>
             <property name="text">
              <string>Spendable:</string>
             </property>
@@ -298,6 +345,11 @@
           </item>
           <item row="4" column="0">
            <widget class="QLabel" name="labelStakeText">
+            <property name="font">
+             <font>
+              <family>微软雅黑</family>
+             </font>
+            </property>
             <property name="text">
              <string>Stake:</string>
             </property>
@@ -307,6 +359,7 @@
            <widget class="QLabel" name="labelStake">
             <property name="font">
              <font>
+              <family>微软雅黑</family>
               <weight>75</weight>
               <bold>true</bold>
              </font>
@@ -326,6 +379,7 @@
            <widget class="QLabel" name="labelWatchStake">
             <property name="font">
              <font>
+              <family>微软雅黑</family>
               <weight>75</weight>
               <bold>true</bold>
              </font>
@@ -345,6 +399,7 @@
            <widget class="QLabel" name="labelWatchImmature">
             <property name="font">
              <font>
+              <family>微软雅黑</family>
               <weight>75</weight>
               <bold>true</bold>
              </font>
@@ -370,6 +425,7 @@
            <widget class="QLabel" name="labelWatchTotal">
             <property name="font">
              <font>
+              <family>微软雅黑</family>
               <weight>75</weight>
               <bold>true</bold>
              </font>
@@ -408,6 +464,7 @@
            <widget class="QLabel" name="labelTotal">
             <property name="font">
              <font>
+              <family>微软雅黑</family>
               <weight>75</weight>
               <bold>true</bold>
              </font>
@@ -444,6 +501,11 @@
           </item>
           <item row="7" column="0">
            <widget class="QLabel" name="labelTotalText">
+            <property name="font">
+             <font>
+              <family>微软雅黑</family>
+             </font>
+            </property>
             <property name="text">
              <string>Total:        </string>
             </property>
@@ -464,12 +526,22 @@
      <item row="0" column="0">
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <property name="bottomMargin">
-        <number>9</number>
+        <number>8</number>
        </property>
        <item>
         <widget class="QLabel" name="labelBalances">
+         <property name="font">
+          <font>
+           <family>微软雅黑</family>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
          <property name="text">
           <string>Balances</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
          </property>
         </widget>
        </item>
@@ -552,12 +624,22 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_6">
      <property name="bottomMargin">
-      <number>9</number>
+      <number>8</number>
      </property>
      <item>
       <widget class="QLabel" name="labelRecentTransactions">
+       <property name="font">
+        <font>
+         <family>微软雅黑</family>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
        <property name="text">
         <string>RecentTransactions</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
        </property>
       </widget>
      </item>
@@ -620,13 +702,18 @@
            <number>5</number>
           </property>
           <property name="leftMargin">
-           <number>5</number>
+           <number>0</number>
           </property>
           <property name="rightMargin">
            <number>5</number>
           </property>
           <item>
            <widget class="QLabel" name="labelDate">
+            <property name="font">
+             <font>
+              <family>微软雅黑</family>
+             </font>
+            </property>
             <property name="text">
              <string>Date</string>
             </property>
@@ -650,6 +737,11 @@
           </item>
           <item>
            <widget class="QLabel" name="labelType">
+            <property name="font">
+             <font>
+              <family>微软雅黑</family>
+             </font>
+            </property>
             <property name="text">
              <string>Type</string>
             </property>
@@ -657,6 +749,11 @@
           </item>
           <item>
            <widget class="QLabel" name="labelAddress">
+            <property name="font">
+             <font>
+              <family>微软雅黑</family>
+             </font>
+            </property>
             <property name="text">
              <string>Label</string>
             </property>
@@ -664,6 +761,11 @@
           </item>
           <item>
            <widget class="QLabel" name="labelAmount">
+            <property name="font">
+             <font>
+              <family>微软雅黑</family>
+             </font>
+            </property>
             <property name="text">
              <string>Amount</string>
             </property>
@@ -676,6 +778,11 @@
         </item>
         <item>
          <widget class="QListView" name="listTransactions">
+          <property name="font">
+           <font>
+            <family>微软雅黑</family>
+           </font>
+          </property>
           <property name="styleSheet">
            <string notr="true">QListView { background: transparent; }</string>
           </property>
@@ -696,7 +803,7 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <property name="topMargin">
-        <number>5</number>
+        <number>10</number>
        </property>
        <property name="bottomMargin">
         <number>5</number>
@@ -716,6 +823,11 @@
        </item>
        <item>
         <widget class="QPushButton" name="showMoreButton">
+         <property name="font">
+          <font>
+           <family>微软雅黑</family>
+          </font>
+         </property>
          <property name="text">
           <string>Show more...</string>
          </property>

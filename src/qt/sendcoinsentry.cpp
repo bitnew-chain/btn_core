@@ -44,6 +44,7 @@ SendCoinsEntry::SendCoinsEntry(const PlatformStyle *_platformStyle, QWidget *par
     // format tool buttons
     GUIUtil::formatToolButtons(ui->addressBookButton, ui->pasteButton, ui->deleteButton);
 
+    ui->payAmount->setStyleSheet("background-color: #FFFFFF; border: 1px solid #D8D8D8;");
     // Connect signals
     connect(ui->payAmount, SIGNAL(valueChanged()), this, SIGNAL(payAmountChanged()));
     connect(ui->checkboxSubtractFeeFromAmount, SIGNAL(toggled(bool)), this, SIGNAL(subtractFeeFromAmountChanged()));

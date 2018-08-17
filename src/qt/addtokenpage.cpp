@@ -25,6 +25,10 @@ AddTokenPage::AddTokenPage(QWidget *parent) :
     ui->setupUi(this);
 
     // Set stylesheet
+    ui->lineEditContractAddress->setStyleSheet("background-color: #FFFFFF;  border: 1px solid #D8D8D8;");
+    ui->lineEditSenderAddress->setStyleSheet("background-color: #FFFFFF;  border: 1px solid #D8D8D8;");
+    ui->clearButton->setStyleSheet("background-color: #FFFFFF; border; 1px solid #4752E8; color: #4752E8;");
+    ui->confirmButton->setStyleSheet("color: white; background: #4752E8; border-radius: 14px;");
     SetObjectStyleSheet(ui->clearButton, StyleSheetNames::ButtonBlack);
 
     ui->labelDescription->setText(tr("(This is your wallet address which will be tied to the token for send/receive operations)"));

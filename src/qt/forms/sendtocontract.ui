@@ -10,6 +10,11 @@
     <height>583</height>
    </rect>
   </property>
+  <property name="font">
+   <font>
+    <family>微软雅黑</family>
+   </font>
+  </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
@@ -71,6 +76,9 @@
            <layout class="QGridLayout" name="gridLayout">
             <property name="leftMargin">
              <number>12</number>
+            </property>
+            <property name="rightMargin">
+             <number>9</number>
             </property>
             <property name="horizontalSpacing">
              <number>15</number>
@@ -205,6 +213,9 @@
          <property name="title">
           <string>Function</string>
          </property>
+         <property name="flat">
+          <bool>true</bool>
+         </property>
          <layout class="QVBoxLayout" name="verticalLayout_3">
           <property name="leftMargin">
            <number>15</number>
@@ -225,8 +236,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>639</width>
-               <height>182</height>
+               <width>643</width>
+               <height>189</height>
               </rect>
              </property>
             </widget>
@@ -240,12 +251,18 @@
          <property name="title">
           <string>Optional</string>
          </property>
+         <property name="flat">
+          <bool>true</bool>
+         </property>
          <layout class="QGridLayout" name="gridLayout_2">
           <property name="leftMargin">
            <number>15</number>
           </property>
           <property name="topMargin">
            <number>15</number>
+          </property>
+          <property name="bottomMargin">
+           <number>6</number>
           </property>
           <property name="horizontalSpacing">
            <number>10</number>
@@ -384,7 +401,7 @@
       <number>9</number>
      </property>
      <property name="topMargin">
-      <number>9</number>
+      <number>6</number>
      </property>
      <property name="rightMargin">
       <number>9</number>
@@ -425,7 +442,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>40</width>
+         <width>14</width>
          <height>20</height>
         </size>
        </property>
@@ -444,15 +461,15 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>QValidatedLineEdit</class>
-   <extends>QLineEdit</extends>
-   <header>qvalidatedlineedit.h</header>
-  </customwidget>
-  <customwidget>
    <class>BitcoinAmountField</class>
    <extends>QLineEdit</extends>
    <header>bitcoinamountfield.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>QValidatedLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>qvalidatedlineedit.h</header>
   </customwidget>
   <customwidget>
    <class>QValidatedTextEdit</class>

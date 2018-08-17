@@ -66,10 +66,11 @@ SendToContract::SendToContract(const PlatformStyle *platformStyle, QWidget *pare
 
     m_ABIFunctionField = new ABIFunctionField(platformStyle, ABIFunctionField::SendTo, ui->scrollAreaFunction);
     ui->scrollAreaFunction->setWidget(m_ABIFunctionField);
+    m_ABIFunctionField->setStyleSheet("background-color: #FFFFFF;");
     ui->lineEditAmount->setEnabled(true);
     ui->labelContractAddress->setToolTip(tr("The contract address that will receive the funds and data."));
     ui->labelAmount->setToolTip(tr("The amount in BTN to send. Default = 0."));
-    ui->labelSenderAddress->setToolTip(tr("The BTN address that will be used as sender."));
+    ui->labelSenderAddress->setToolTip(tr("The BTN address that will be used as sender."));//houyq129@163.com
 
     m_tabInfo = new TabBarInfo(ui->stackedWidget);
     m_tabInfo->addTab(0, tr("Send To Contract"));
@@ -82,6 +83,14 @@ SendToContract::SendToContract(const PlatformStyle *platformStyle, QWidget *pare
     ui->lineEditGasLimit->setValue(DEFAULT_GAS_LIMIT_OP_SEND);
     ui->textEditInterface->setIsValidManually(true);
     ui->pushButtonSendToContract->setEnabled(false);
+
+    //Set Style
+    ui->lineEditContractAddress->setStyleSheet("background-color: #FFFFFF; border: 1px solid #D8D8D8;");
+    ui->textEditInterface->setStyleSheet("background-color: #FFFFFF; border: 1px solid #D8D8D8;");
+    ui->lineEditAmount->setStyleSheet("background-color: #FFFFFF; border: 1px solid #D8D8D8;");
+    ui->lineEditGasLimit->setStyleSheet("background-color: #FFFFFF; border: 1px solid #D8D8D8;");
+    ui->lineEditGasPrice->setStyleSheet("background-color: #FFFFFF; border: 1px solid #D8D8D8;");
+    ui->lineEditSenderAddress->setStyleSheet("background-color: #FFFFFF; border: 1px solid #D8D8D8;");
 
     // Create new PRC command line interface
     QStringList lstMandatory;

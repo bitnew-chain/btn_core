@@ -294,6 +294,7 @@ private Q_SLOTS:
     void showModalOverlay();
 
     void showModalBackupOverlay();
+
 };
 
 class UnitDisplayStatusBarControl : public QLabel

@@ -65,6 +65,7 @@ TransactionView::TransactionView(const PlatformStyle *platformStyle, QWidget *pa
     dateWidget->addItem(tr("Last month"), LastMonth);
     dateWidget->addItem(tr("This year"), ThisYear);
     dateWidget->addItem(tr("Range..."), Range);
+    dateWidget->setStyleSheet("background-color: #FFFFFF; border: 1px solid #D8D8D8;");
     hlayout->addWidget(dateWidget);
 
     typeWidget = new QComboBox(this);
@@ -80,13 +81,14 @@ TransactionView::TransactionView(const PlatformStyle *platformStyle, QWidget *pa
     typeWidget->addItem(tr("Contract Send"), TransactionFilterProxy::TYPE(TransactionRecord::ContractSend));
     typeWidget->addItem(tr("Mined"), TransactionFilterProxy::TYPE(TransactionRecord::Generated));
     typeWidget->addItem(tr("Other"), TransactionFilterProxy::TYPE(TransactionRecord::Other));
-
+    typeWidget->setStyleSheet("background-color: #FFFFFF; border: 1px solid #D8D8D8;");
     hlayout->addWidget(typeWidget);
 
     addressWidget = new QLineEdit(this);
 #if QT_VERSION >= 0x040700
     addressWidget->setPlaceholderText(tr("Enter address or label to search"));
 #endif
+    addressWidget->setStyleSheet("background-color: #FFFFFF; border: 1px solid #D8D8D8;");
     hlayout->addWidget(addressWidget);
 
     amountWidget = new QLineEdit(this);
@@ -95,6 +97,7 @@ TransactionView::TransactionView(const PlatformStyle *platformStyle, QWidget *pa
 #endif
     amountWidget->setFixedWidth(AMOUNT_MINIMUM_COLUMN_WIDTH -10);
     amountWidget->setValidator(new QDoubleValidator(0, 1e20, 8, this));
+    amountWidget->setStyleSheet("background-color: #FFFFFF; border: 1px solid #D8D8D8;");
     hlayout->addWidget(amountWidget);
 
     QVBoxLayout *vlayout = new QVBoxLayout(this);
@@ -119,6 +122,7 @@ TransactionView::TransactionView(const PlatformStyle *platformStyle, QWidget *pa
     view->setContextMenuPolicy(Qt::CustomContextMenu);
 
     view->installEventFilter(this);
+    view->setStyleSheet("background-color: #FFFFFF;");
 
     transactionView = view;
 
