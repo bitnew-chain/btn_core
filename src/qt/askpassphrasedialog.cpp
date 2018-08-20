@@ -152,17 +152,21 @@ void AskPassphraseDialog::accept()
                 {
                     //QMessageBox::critical(this, tr("Wallet encryption failed"),
                     //                     tr("Wallet encryption failed due to an internal error. Your wallet was not encrypted."));
-					QMessageBox btnRetVal(QMessageBox::Critical, tr("Wallet encryption failed"), 
-											tr("Wallet encryption failed due to an internal error. Your wallet was not encrypted."));
-					btnRetVal.setButtonText(QMessageBox::Ok, tr("Ok"));
-					btnRetVal.exec();
+		    QMessageBox btnRetVal(QMessageBox::Critical, tr("Wallet encryption failed"), 
+					  tr("Wallet encryption failed due to an internal error. Your wallet was not encrypted."));
+		    btnRetVal.setButtonText(QMessageBox::Ok, tr("Ok"));
+		    btnRetVal.exec();
                 }
                 QDialog::accept(); // Success
             }
             else
             {
-                QMessageBox::critical(this, tr("Wallet encryption failed"),
+                //QMessageBox::critical(this, tr("Wallet encryption failed"),
+                //                     tr("The supplied passphrases do not match."));
+		QMessageBox btnRetVal(QMessageBox::Critical, tr("Wallet encryption failed"), 
                                      tr("The supplied passphrases do not match."));
+		btnRetVal.setButtonText(QMessageBox::Ok, tr("Ok"));
+		btnRetVal.exec();
             }
         }
         else
@@ -192,7 +196,7 @@ void AskPassphraseDialog::accept()
         {
             //QMessageBox::critical(this, tr("Wallet decryption failed"),
             //                      tr("The passphrase entered for the wallet decryption was incorrect."));
-	    QMessageBox btnRetVal(QMessageBox::Critical, tr("Wallet unlock failed"),
+	    QMessageBox btnRetVal(QMessageBox::Critical, tr("Wallet decryption failed"),
 			    tr("The passphrase entered for the wallet decryption was incorrect."));
 	    btnRetVal.setButtonText(QMessageBox::Ok, tr("Ok"));
 	    btnRetVal.exec();
@@ -207,15 +211,19 @@ void AskPassphraseDialog::accept()
         {
             if(model->changePassphrase(oldpass, newpass1))
             {
-                QMessageBox::information(this, tr("Wallet encrypted"),
+                //QMessageBox::information(this, tr("Wallet encrypted"),
+                //                     tr("Wallet passphrase was successfully changed."));
+	    	QMessageBox btnRetVal(QMessageBox::Information, tr("Wallet encrypted"),
                                      tr("Wallet passphrase was successfully changed."));
+	    	btnRetVal.setButtonText(QMessageBox::Ok, tr("Ok"));
+	    	btnRetVal.exec();
                 QDialog::accept(); // Success
             }
             else
             {
                 //QMessageBox::critical(this, tr("Wallet encryption failed"),
                 //                     tr("The passphrase entered for the wallet decryption was incorrect."));
-		QMessageBox btnRetVal(QMessageBox::Critical, tr("Wallet unlock failed"),
+		QMessageBox btnRetVal(QMessageBox::Critical, tr("Wallet encryption failed"),
 				tr("The passphrase entered for the wallet decryption was incorrect."));
 		btnRetVal.setButtonText(QMessageBox::Ok, tr("Ok"));
 		btnRetVal.exec();
@@ -223,8 +231,12 @@ void AskPassphraseDialog::accept()
         }
         else
         {
-            QMessageBox::critical(this, tr("Wallet encryption failed"),
+            //QMessageBox::critical(this, tr("Wallet encryption failed"),
+            //                     tr("The supplied passphrases do not match."));
+	    QMessageBox btnRetVal(QMessageBox::Information, tr("Wallet encryption failed"),
                                  tr("The supplied passphrases do not match."));
+	    btnRetVal.setButtonText(QMessageBox::Ok, tr("Ok"));
+	    btnRetVal.exec();
         }
         break;
     }

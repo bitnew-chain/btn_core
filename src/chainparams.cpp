@@ -152,6 +152,9 @@ public:
         };
 
         chainTxData = ChainTxData{
+		1533866848,
+		442159,
+		0.03392
         };
         consensus.nLastPOWBlock = 5000;
         consensus.nMPoSRewardRecipients = 10;
