@@ -216,6 +216,14 @@ if test "x$enable_debug" = xyes; then
     if test "x$GXX" = xyes; then
         CXXFLAGS="$CXXFLAGS -g3 -O0"
     fi
+else
+    if test "x$GCC" = xyes; then
+        CFLAGS="$CFLAGS -O2"
+    fi
+
+    if test "x$GXX" = xyes; then
+        CXXFLAGS="$CXXFLAGS -O2"
+    fi
 fi
 
 CPPFLAGS="$CPPFLAGS -DBTN_BUILD"
