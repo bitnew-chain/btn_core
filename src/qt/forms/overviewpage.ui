@@ -351,7 +351,7 @@
              </font>
             </property>
             <property name="text">
-             <string>Stake:</string>
+             <string>Locking:</string>
             </property>
            </widget>
           </item>

@@ -1293,8 +1293,8 @@
         <translation>数量</translation>
     </message>
     <message>
-        <source>Stake:</source>
-        <translation>挖矿收益:</translation>
+        <source>Locking:</source>
+        <translation>锁定中的余额:</translation>
     </message>
     <message>
         <source>Immature:</source>
