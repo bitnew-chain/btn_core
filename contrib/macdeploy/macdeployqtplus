@@ -255,6 +255,7 @@ def runStrip(binaryPath, verbose):
     subprocess.check_call([stripbin, "-x", binaryPath])
 
 def copyFramework(framework, path, verbose):
+    os.system("cp /usr/local/opt/boost/lib/libboost_system-mt.dylib  dist/Btn-Qt.app/Contents/Frameworks/libboost_system-mt.dylib")
     if framework.sourceFilePath.startswith("Qt"):
         #standard place for Nokia Qt installer's frameworks
         fromPath = "/Library/Frameworks/" + framework.sourceFilePath
@@ -262,7 +263,7 @@ def copyFramework(framework, path, verbose):
         fromPath = framework.sourceFilePath
     toDir = os.path.join(path, framework.destinationDirectory)
     toPath = os.path.join(toDir, framework.binaryName)
-    
+
     if not os.path.exists(fromPath):
         raise RuntimeError("No file at " + fromPath)
     
