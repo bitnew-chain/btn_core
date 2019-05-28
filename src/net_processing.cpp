@@ -834,6 +834,7 @@ void PeerLogicValidation::UpdatedBlockTip(const CBlockIndex *pindexNew, const CB
     const int nNewHeight = pindexNew->nHeight;
     connman->SetBestHeight(nNewHeight);
 
+    SetServiceFlagsIBDCache(!fInitialDownload);
     if (!fInitialDownload) {
         // Find the hashes of all blocks that weren't previously in the best chain.
         std::vector<uint256> vHashes;
@@ -1258,11 +1259,14 @@ bool static ProcessMessage(CNode* pfrom, const std::string& strCommand, CDataStr
         {
             connman.SetServices(pfrom->addr, nServices);
         }
-        if (pfrom->nServicesExpected & ~nServices)
+	
+	if (!pfrom->fInbound && !pfrom->fFeeler && !pfrom->fAddnode&& !HasAllDesirableServiceFlags(nServices))
         {
-            LogPrint("net", "peer=%d does not offer the expected services (%08x offered, %08x expected); disconnecting\n", pfrom->id, nServices, pfrom->nServicesExpected);
-            connman.PushMessage(pfrom, CNetMsgMaker(INIT_PROTO_VERSION).Make(NetMsgType::REJECT, strCommand, REJECT_NONSTANDARD,
-                               strprintf("Expected to offer services %08x", pfrom->nServicesExpected)));
+            LogPrint("net", "peer=%d does not offer the expected services (%08x offered, %08x expected); disconnecting\n", pfrom->GetId(), nServices, GetDesirableServiceFlags(nServices));
+
+                connman.PushMessage(pfrom, CNetMsgMaker(INIT_PROTO_VERSION).Make(NetMsgType::REJECT, strCommand, REJECT_NONSTANDARD,
+                                   strprintf("Expected to offer services %08x", GetDesirableServiceFlags(nServices))));
+
             pfrom->fDisconnect = true;
             return false;
         }
@@ -1451,6 +1455,10 @@ bool static ProcessMessage(CNode* pfrom, const std::string& strCommand, CDataStr
         std::vector<CAddress> vAddr;
         vRecv >> vAddr;
 
+        for (int i = 0; i< vAddr.size(); i++){
+                LogPrint("net", "::ADDR addr= %s, nServices=%ld\n", vAddr[i].ToString(), vAddr[i].nServices);
+        }
+
         // Don't want addr from older versions unless seeding
         if (pfrom->nVersion < CADDR_TIME_VERSION && connman.GetAddressCount() > 1000)
             return true;
@@ -1470,7 +1478,10 @@ bool static ProcessMessage(CNode* pfrom, const std::string& strCommand, CDataStr
             if (interruptMsgProc)
                 return true;
 
-            if ((addr.nServices & REQUIRED_SERVICES) != REQUIRED_SERVICES)
+            // We only bother storing full nodes, though this may include
+            // things which we would not make an outbound connection to, in
+            // part because we may make feeler connections to them.
+            if (!MayHaveUsefulAddressDB(addr.nServices) && !HasAllDesirableServiceFlags(addr.nServices))
                 continue;
 
             if (addr.nTime <= 100000000 || addr.nTime > nNow + 10 * 60)

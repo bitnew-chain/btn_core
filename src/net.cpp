@@ -388,7 +388,8 @@ CNode* CConnman::ConnectNode(CAddress addrConnect, const char *pszDest, bool fCo
         // Add node
         NodeId id = GetNewNodeId();
         uint64_t nonce = GetDeterministicRandomizer(RANDOMIZER_ID_LOCALHOSTNONCE).Write(id).Finalize();
-        CNode* pnode = new CNode(id, nLocalServices, GetBestHeight(), hSocket, addrConnect, CalculateKeyedNetGroup(addrConnect), nonce, pszDest ? pszDest : "", false);
+        LogPrint("net", "ConnectNode nLocalServices = %ld\n", nLocalServices);
+	CNode* pnode = new CNode(id, nLocalServices, GetBestHeight(), hSocket, addrConnect, CalculateKeyedNetGroup(addrConnect), nonce, pszDest ? pszDest : "", false);
         pnode->nServicesExpected = ServiceFlags(addrConnect.nServices & nRelevantServices);
         pnode->AddRef();
 
@@ -943,8 +944,8 @@ bool CConnman::AttemptToEvictConnection()
                 continue;
             NodeEvictionCandidate candidate = {node->id, node->nTimeConnected, node->nMinPingUsecTime,
                                                node->nLastBlockTime, node->nLastTXTime,
-                                               (node->nServices & nRelevantServices) == nRelevantServices,
-                                               node->fRelayTxes, node->pfilter != NULL, node->addr, node->nKeyedNetGroup};
+                                               HasAllDesirableServiceFlags(node->nServices),
+					       node->fRelayTxes, node->pfilter != NULL, node->addr, node->nKeyedNetGroup};
             vEvictionCandidates.push_back(candidate);
         }
     }
@@ -1564,30 +1565,39 @@ void CConnman::ThreadDNSAddressSeed()
 
         LOCK(cs_vNodes);
         int nRelevant = 0;
-        for (auto pnode : vNodes) {
-            nRelevant += pnode->fSuccessfullyConnected && ((pnode->nServices & nRelevantServices) == nRelevantServices);
-        }
+	for (const CNode* pnode : vNodes) {
+        	nRelevant += pnode->fSuccessfullyConnected && !pnode->fFeeler && !pnode->fOneShot && !pnode->fAddnode && !pnode->fInbound;
+	}
+	LogPrint("net", "nRelevant = %d\n", nRelevant);
         if (nRelevant >= 2) {
             LogPrintf("P2P peers available. Skipped DNS seeding.\n");
             return;
         }
     }
 
-    const std::vector<CDNSSeedData> &vSeeds = Params().DNSSeeds();
+    const std::vector<std::string> &vSeeds = Params().DNSSeeds();
     int found = 0;
 
     LogPrintf("Loading addresses from DNS seeds (could take a while)\n");
 
-    BOOST_FOREACH(const CDNSSeedData &seed, vSeeds) {
+    for (const std::string &seed : vSeeds) {
         if (HaveNameProxy()) {
-            AddOneShot(seed.host);
-        } else {
+        	AddOneShot(seed);
+	} else {
             std::vector<CNetAddr> vIPs;
             std::vector<CAddress> vAdd;
-            ServiceFlags requiredServiceBits = nRelevantServices;
-            if (LookupHost(GetDNSHost(seed, &requiredServiceBits).c_str(), vIPs, 0, true))
+            ServiceFlags requiredServiceBits = GetDesirableServiceFlags(NODE_NONE);
+	    LogPrint("net", " requiredServiceBits = %ld\n", requiredServiceBits);
+            std::string host = strprintf("x%x.%s", requiredServiceBits, seed);
+	    LogPrint("net", " host=%s\n", host);
+            CNetAddr resolveSource;
+            if (!resolveSource.SetInternal(host)) {
+                continue;
+            }
+            unsigned int nMaxIPs = 256; // Limits number of IPs learned from a DNS seed
+            if (LookupHost(host.c_str(), vIPs, nMaxIPs, true))
             {
-                BOOST_FOREACH(const CNetAddr& ip, vIPs)
+                for (const CNetAddr& ip : vIPs)
                 {
                     int nOneDay = 24*3600;
                     CAddress addr = CAddress(CService(ip, Params().GetDefaultPort()), requiredServiceBits);
@@ -1595,17 +1605,13 @@ void CConnman::ThreadDNSAddressSeed()
                     vAdd.push_back(addr);
                     found++;
                 }
+                addrman.Add(vAdd, resolveSource);
+            } else {
+                // We now avoid directly using results from DNS Seeds which do not support service bit filtering,
+                // instead using them as a oneshot to get nodes with our desired service bits.
+                AddOneShot(seed);
             }
-            // TODO: The seed name resolve may fail, yielding an IP of [::], which results in
-            // addrman assigning the same source to results from different seeds.
-            // This should switch to a hard-coded stable dummy IP for each seed name, so that the
-            // resolve is not required at all.
-            if (!vIPs.empty()) {
-                CService seedSource;
-                Lookup(seed.name.c_str(), seedSource, 0, true);
-                addrman.Add(vAdd, seedSource);
-            }
-        }
+	}
     }
 
     LogPrintf("%d addresses found from DNS seeds\n", found);
@@ -1755,15 +1761,28 @@ void CConnman::ThreadOpenConnections()
             }
         }
 
+        addrman.ResolveCollisions();
+
         int64_t nANow = GetAdjustedTime();
         int nTries = 0;
         while (!interruptNet)
         {
-            CAddrInfo addr = addrman.Select(fFeeler);
+            CAddrInfo addr = addrman.SelectTriedCollision();
 
-            // if we selected an invalid address, restart
-            if (!addr.IsValid() || setConnected.count(addr.GetGroup()) || IsLocal(addr))
+            // SelectTriedCollision returns an invalid address if it is empty.
+            if (!fFeeler || !addr.IsValid()) {
+                addr = addrman.Select(fFeeler);
+            }
+
+           // Require outbound connections, other than feelers, to be to distinct network groups
+            if (!fFeeler && setConnected.count(addr.GetGroup())) {
                 break;
+            }
+
+            // if we selected an invalid or local address, restart
+            if (!addr.IsValid() || IsLocal(addr)) {
+                break;
+            }
 
             // If we didn't find an appropriate destination after trying 100 addresses fetched from addrman,
             // stop this loop, and let the outer loop run again (which sleeps, adds seed nodes, recalculates
@@ -1775,17 +1794,20 @@ void CConnman::ThreadOpenConnections()
             if (IsLimited(addr))
                 continue;
 
-            // only connect to full nodes
-            if ((addr.nServices & REQUIRED_SERVICES) != REQUIRED_SERVICES)
-                continue;
-
             // only consider very recently tried nodes after 30 failed attempts
             if (nANow - addr.nLastTry < 600 && nTries < 30)
                 continue;
 
-            // only consider nodes missing relevant services after 40 failed attempts and only if less than half the outbound are up.
-            if ((addr.nServices & nRelevantServices) != nRelevantServices && (nTries < 40 || nOutbound >= (nMaxOutbound >> 1)))
+            // for non-feelers, require all the services we'll want,
+            // for feelers, only require they be a full node (only because most
+            // SPV clients don't have a good address DB available)
+            if (!fFeeler && !HasAllDesirableServiceFlags(addr.nServices)) {
+                LogPrint("net", "ThreadOpenConnections HasAllDesirableServiceFlags addr= %s, nServices = %ld, fFeeler = %s\n", addr.ToString(), addr.nServices, fFeeler ? "true":"false");
                 continue;
+            } else if (fFeeler && !MayHaveUsefulAddressDB(addr.nServices)) {
+                LogPrint("net", "ThreadOpenConnections MayHaveUsefulAddressDB addr= %s, nServices = %ld, fFeeler = %s\n", addr.ToString(), addr.nServices, fFeeler ? "true":"false");
+                continue;
+            }
 
             // do not allow non-default ports, unless after 50 invalid addresses selected already
             if (addr.GetPort() != Params().GetDefaultPort() && nTries < 50)
@@ -1806,6 +1828,7 @@ void CConnman::ThreadOpenConnections()
             }
 
             OpenNetworkConnection(addrConnect, (int)setConnected.size() >= std::min(nMaxConnections - 1, 2), &grant, NULL, false, fFeeler);
+	    LogPrint("net", "ThreadOpenConnections success addr= %s, nService = %ld\n", addrConnect.ToString(), addrConnect.nServices);
         }
     }
 }
