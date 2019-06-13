@@ -144,6 +144,12 @@ public:
 //! maximum allowed number of entries in buckets for new and tried addresses
 #define ADDRMAN_BUCKET_SIZE 64
 
+//! the maximum number of tried addr collisions to store
+#define ADDRMAN_SET_TRIED_COLLISION_SIZE 10
+
+//! the maximum time we'll spend trying to resolve a tried table collision, in seconds
+static const int64_t ADDRMAN_TEST_WINDOW = 40*60; // 40 minutes
+
 //! over how many buckets entries with tried addresses from a single group (/16 for IPv4) are spread
 #define ADDRMAN_TRIED_BUCKETS_PER_GROUP 8
 
@@ -165,6 +171,8 @@ public:
 //! ... in at least this many days
 #define ADDRMAN_MIN_FAIL_DAYS 7
 
+//! how recent a successful connection should be before we allow an address to be evicted from tried
+#define ADDRMAN_REPLACEMENT_HOURS 4
 //! the maximum percentage of nodes to return in a getaddr call
 #define ADDRMAN_GETADDR_MAX_PCT 23
 
@@ -207,6 +215,9 @@ private:
     //! last time Good was called (memory only)
     int64_t nLastGood;
 
+    //! Holds addrs inserted into tried table that collide with existing entries. Test-before-evict discipline used to resolve these collisions.
+    std::set<int> m_tried_collisions;
+
 protected:
     //! secret key to randomize bucket select with
     uint256 nKey;
@@ -234,7 +245,7 @@ protected:
     void ClearNew(int nUBucket, int nUBucketPos);
 
     //! Mark an entry "good", possibly moving it from "new" to "tried".
-    void Good_(const CService &addr, int64_t nTime);
+    void Good_(const CService &addr, bool test_before_evict,  int64_t nTime);
 
     //! Add an entry to the "new" table.
     bool Add_(const CAddress &addr, const CNetAddr& source, int64_t nTimePenalty);
@@ -248,6 +259,11 @@ protected:
     //! Wraps GetRandInt to allow tests to override RandomInt and make it determinismistic.
     virtual int RandomInt(int nMax);
 
+    //! See if any to-be-evicted tried table entries have been tested and if so resolve the collisions.
+    void ResolveCollisions_() ;
+
+    //! Return a random to-be-evicted tried table address.
+    CAddrInfo SelectTriedCollision_() ;
 #ifdef DEBUG_ADDRMAN
     //! Perform consistency check. Returns an error code or zero.
     int Check_();
@@ -314,6 +330,7 @@ public:
             if (info.nRefCount) {
                 assert(nIds != nNew); // this means nNew was wrong, oh ow
                 s << info;
+		LogPrint("addrman", "Serialize1 addr=%s nServices=%ld\n", info.ToString(), info.nServices);
                 nIds++;
             }
         }
@@ -323,6 +340,7 @@ public:
             if (info.fInTried) {
                 assert(nIds != nTried); // this means nTried was wrong, oh ow
                 s << info;
+		LogPrint("addrman", "Serialize2 addr=%s nServices=%ld\n", info.ToString(), info.nServices);
                 nIds++;
             }
         }
@@ -375,6 +393,7 @@ public:
         for (int n = 0; n < nNew; n++) {
             CAddrInfo &info = mapInfo[n];
             s >> info;
+	    LogPrint("addrman", "Unserialize new %s nServices=%ld\n", info.ToString(), info.nServices);
             mapAddr[info] = n;
             info.nRandomPos = vRandom.size();
             vRandom.push_back(n);
@@ -396,6 +415,7 @@ public:
         for (int n = 0; n < nTried; n++) {
             CAddrInfo info;
             s >> info;
+	    LogPrint("addrman", "Unserialize nTried %s nServices=%ld\n", info.ToString(), info.nServices);
             int nKBucket = info.GetTriedBucket(nKey);
             int nKBucketPos = info.GetBucketPosition(nKey, false, nKBucket);
             if (vvTried[nKBucket][nKBucketPos] == -1) {
@@ -527,11 +547,11 @@ public:
     }
 
     //! Mark an entry as accessible.
-    void Good(const CService &addr, int64_t nTime = GetAdjustedTime())
+    void Good(const CService &addr, bool test_before_evict = true, int64_t nTime = GetAdjustedTime())
     {
         LOCK(cs);
         Check();
-        Good_(addr, nTime);
+        Good_(addr, test_before_evict, nTime);
         Check();
     }
 
@@ -544,6 +564,27 @@ public:
         Check();
     }
 
+    //! See if any to-be-evicted tried table entries have been tested and if so resolve the collisions.
+    void ResolveCollisions()
+    {
+        LOCK(cs);
+        Check();
+        ResolveCollisions_();
+        Check();
+    }
+
+    //! Randomly select an address in tried that another address is attempting to evict.
+    CAddrInfo SelectTriedCollision()
+    {
+        CAddrInfo ret;
+        {
+            LOCK(cs);
+            Check();
+            ret = SelectTriedCollision_();
+            Check();
+        }
+        return ret;
+    }
     /**
      * Choose an address to connect to.
      */

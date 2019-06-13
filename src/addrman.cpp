@@ -187,7 +187,7 @@ void CAddrMan::MakeTried(CAddrInfo& info, int nId)
     info.fInTried = true;
 }
 
-void CAddrMan::Good_(const CService& addr, int64_t nTime)
+void CAddrMan::Good_(const CService& addr, bool test_before_evict , int64_t nTime)
 {
     int nId;
 
@@ -217,7 +217,7 @@ void CAddrMan::Good_(const CService& addr, int64_t nTime)
         return;
 
     // find a bucket it is in now
-    int nRnd = RandomInt(ADDRMAN_NEW_BUCKET_COUNT);
+    int nRnd = insecure_rand.randrange(ADDRMAN_NEW_BUCKET_COUNT); 
     int nUBucket = -1;
     for (unsigned int n = 0; n < ADDRMAN_NEW_BUCKET_COUNT; n++) {
         int nB = (n + nRnd) % ADDRMAN_NEW_BUCKET_COUNT;
@@ -233,10 +233,24 @@ void CAddrMan::Good_(const CService& addr, int64_t nTime)
     if (nUBucket == -1)
         return;
 
-    LogPrint("addrman", "Moving %s to tried\n", addr.ToString());
+    // which tried bucket to move the entry to
+    int tried_bucket = info.GetTriedBucket(nKey);
+    int tried_bucket_pos = info.GetBucketPosition(nKey, false, tried_bucket);
 
-    // move nId to the tried tables
-    MakeTried(info, nId);
+    // Will moving this address into tried evict another entry?
+    if (test_before_evict && (vvTried[tried_bucket][tried_bucket_pos] != -1)) {
+        // Output the entry we'd be colliding with, for debugging purposes
+        auto colliding_entry = mapInfo.find(vvTried[tried_bucket][tried_bucket_pos]);
+        LogPrint("addrman", "Collision inserting element into tried table (%s), moving %s to m_tried_collisions=%d\n", colliding_entry != mapInfo.end() ? colliding_entry->second.ToString() : "", addr.ToString(), m_tried_collisions.size());
+        if (m_tried_collisions.size() < ADDRMAN_SET_TRIED_COLLISION_SIZE) {
+            m_tried_collisions.insert(nId);
+        }
+    } else {
+        LogPrint("addrman", "Moving %s to tried\n", addr.ToString());
+
+        // move nId to the tried tables
+        MakeTried(info, nId);
+    }
 }
 
 bool CAddrMan::Add_(const CAddress& addr, const CNetAddr& source, int64_t nTimePenalty)
@@ -262,7 +276,8 @@ bool CAddrMan::Add_(const CAddress& addr, const CNetAddr& source, int64_t nTimeP
 
         // add services
         pinfo->nServices = ServiceFlags(pinfo->nServices | addr.nServices);
-
+	
+	LogPrint("net", "CAddrMan::Add_ update addr =%s, nServices=%ld\n",pinfo->ToString(), pinfo->nServices);
         // do not update if no new information is present
         if (!addr.nTime || (pinfo->nTime && addr.nTime <= pinfo->nTime))
             return false;
@@ -283,6 +298,7 @@ bool CAddrMan::Add_(const CAddress& addr, const CNetAddr& source, int64_t nTimeP
             return false;
     } else {
         pinfo = Create(addr, source, &nId);
+	LogPrint("net", "CAddrMan::Add_ create addr =%s, nServices=%ld\n",pinfo->ToString(), pinfo->nServices);
         pinfo->nTime = std::max((int64_t)0, (int64_t)pinfo->nTime - nTimePenalty);
         nNew++;
         fNew = true;
@@ -521,3 +537,90 @@ void CAddrMan::SetServices_(const CService& addr, ServiceFlags nServices)
 int CAddrMan::RandomInt(int nMax){
     return GetRandInt(nMax);
 }
+
+void CAddrMan::ResolveCollisions_()
+{
+    for (std::set<int>::iterator it = m_tried_collisions.begin(); it != m_tried_collisions.end();) {
+        int id_new = *it;
+
+        bool erase_collision = false;
+
+        // If id_new not found in mapInfo remove it from m_tried_collisions
+        if (mapInfo.count(id_new) != 1) {
+            erase_collision = true;
+        } else {
+            CAddrInfo& info_new = mapInfo[id_new];
+
+            // Which tried bucket to move the entry to.
+            int tried_bucket = info_new.GetTriedBucket(nKey);
+            int tried_bucket_pos = info_new.GetBucketPosition(nKey, false, tried_bucket);
+            if (!info_new.IsValid()) { // id_new may no longer map to a valid address
+                erase_collision = true;
+            } else if (vvTried[tried_bucket][tried_bucket_pos] != -1) { // The position in the tried bucket is not empty
+
+                // Get the to-be-evicted address that is being tested
+                int id_old = vvTried[tried_bucket][tried_bucket_pos];
+                CAddrInfo& info_old = mapInfo[id_old];
+
+                // Has successfully connected in last X hours
+                if (GetAdjustedTime() - info_old.nLastSuccess < ADDRMAN_REPLACEMENT_HOURS*(60*60)) {
+                    erase_collision = true;
+                } else if (GetAdjustedTime() - info_old.nLastTry < ADDRMAN_REPLACEMENT_HOURS*(60*60)) { // attempted to connect and failed in last X hours
+
+                    // Give address at least 60 seconds to successfully connect
+                    if (GetAdjustedTime() - info_old.nLastTry > 60) {
+                        LogPrint("addrman", "Replacing %s with %s in tried table\n", info_old.ToString(), info_new.ToString());
+
+                        // Replaces an existing address already in the tried table with the new address
+                        Good_(info_new, false, GetAdjustedTime());
+                        erase_collision = true;
+                    }
+                } else if (GetAdjustedTime() - info_new.nLastSuccess > ADDRMAN_TEST_WINDOW) {
+                    // If the collision hasn't resolved in some reasonable amount of time,
+                    // just evict the old entry -- we must not be able to
+                    // connect to it for some reason.
+                    LogPrint("addrman", "Unable to test; replacing %s with %s in tried table anyway\n", info_old.ToString(), info_new.ToString());
+                    Good_(info_new, false, GetAdjustedTime());
+                    erase_collision = true;
+                }
+            } else { // Collision is not actually a collision anymore
+                Good_(info_new, false, GetAdjustedTime());
+                erase_collision = true;
+            }
+        }
+
+        if (erase_collision) {
+            m_tried_collisions.erase(it++);
+        } else {
+            it++;
+        }
+    }
+}
+
+CAddrInfo CAddrMan::SelectTriedCollision_()
+{
+    if (m_tried_collisions.size() == 0) return CAddrInfo();
+
+    std::set<int>::iterator it = m_tried_collisions.begin();
+
+    // Selects a random element from m_tried_collisions
+    std::advance(it, insecure_rand.randrange(m_tried_collisions.size()));
+    int id_new = *it;
+
+    // If id_new not found in mapInfo remove it from m_tried_collisions
+    if (mapInfo.count(id_new) != 1) {
+        m_tried_collisions.erase(it);
+        return CAddrInfo();
+    }
+
+    CAddrInfo& newInfo = mapInfo[id_new];
+
+    // which tried bucket to move the entry to
+    int tried_bucket = newInfo.GetTriedBucket(nKey);
+    int tried_bucket_pos = newInfo.GetBucketPosition(nKey, false, tried_bucket);
+
+    int id_old = vvTried[tried_bucket][tried_bucket_pos];
+
+    return mapInfo[id_old];
+}
+

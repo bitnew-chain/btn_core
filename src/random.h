@@ -78,6 +78,32 @@ public:
         return (Rw << 16) + Rz;
     }
 
+    /** Generate a random (bits)-bit integer. */
+    uint64_t randbits(int bits) noexcept {
+        if (bits == 0) {
+            return 0;
+        } else if (bits > 32) {
+            return rand64() >> (64 - bits);
+        } else {
+            if (bitbuf_size < bits) FillBitBuffer();
+            uint64_t ret = bitbuf & (~(uint64_t)0 >> (64 - bits));
+            bitbuf >>= bits;
+            bitbuf_size -= bits;
+            return ret;
+        }
+    }
+
+    /** Generate a random integer in the range [0..range). */
+    uint64_t randrange(uint64_t range) noexcept
+    {
+        --range;
+        int bits = CountBits(range);
+        while (true) {
+            uint64_t ret = randbits(bits);
+            if (ret <= range) return ret;
+        }
+    }
+
     uint32_t Rz;
     uint32_t Rw;
 };
